@@ -1,0 +1,24 @@
+ContentDM templates used for seekingmichigan.org
+================================================
+
+This project makes publicly available the custom templates developed for 
+seekingmichigan.org.  The templates are for the advanced search form, 
+the search results page, and everything related to viewing items.  You 
+are free to use this code to aid in developing similar features.  However, 
+the artwork and styles developed by Airbag Industries are copyrighted 
+and cannot be used without permission.
+
+
+About the Code
+--------------
+
+This is spaghetti code at its finest.  In the name of expediency, I 
+simply updated the default ContentDM templates to match our custom 
+layout and I tried to use as much of their existing code as possible.
+As a result, the code is very hard to follow and I wouldn't recommend 
+duplicating the effort.  I started to move in the right direction by 
+building the Search class that actually has some unit tests written 
+for it.  
+
+One suggestion might be to use Ohio University's object-oriented 
+ContentDM library, but it seemed a bit unwieldy at the time.
