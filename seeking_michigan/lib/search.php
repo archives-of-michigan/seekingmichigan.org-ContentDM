@@ -69,7 +69,8 @@ class Search {
           $this->sortby,
           $this->maxrecs,
           $this->start[1],
-          $this->total);
+          $this->total,
+          1);
     
     return($results);
   }
