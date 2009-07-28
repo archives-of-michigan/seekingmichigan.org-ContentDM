@@ -1,4 +1,4 @@
-<? 
+<?php
 include("config.php");
 
 $alias = (isset($_GET["CISOROOT"])) ? $_GET["CISOROOT"] : 0;
@@ -72,7 +72,6 @@ if($base_type == 'image') {
         This item is not printable in a web browser.  You can download the item and print 
         it using the appropriate software <a href="/cgi-bin/showfile.exe?CISOROOT=<?=$alias?>&amp;CISOPTR=<?=$itnum?>">here</a>.
       <? endif; ?>
-      <? // include('discover/meta_scr.php'); ?>
     </body>
   </html>
 <? endif; ?>
