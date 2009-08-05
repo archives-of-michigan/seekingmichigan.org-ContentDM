@@ -41,6 +41,7 @@ class Search {
     $search = new Search();
 
     $alias = array_values(ContentDM::get_alias($params));
+    $search->search_alias = $alias;
 
     $search->maxrecs = 20;
     $search->sortby = array('title');
@@ -55,8 +56,6 @@ class Search {
 
     $start = (isset($params['CISOSTART'])) ? $params['CISOSTART'] : "1,1";
     $search->start = split(',',$start);
-
-    $search->search_alias = $alias;
 
     return($search);
   }

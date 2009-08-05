@@ -2,7 +2,7 @@
 require_once dirname(__FILE__).'/../../../seeking_michigan/lib/search.php';
 
 class SearchFromParamsTest extends PHPUnit_Framework_TestCase {
-  public function testShouldParseSearchString() {
+  public function testShouldSetAllAliases() {
     $get = array(
       "CISOOP1" => "any",
       "CISOFIELD1" => "CISOSEARCHALL",
@@ -15,5 +15,27 @@ class SearchFromParamsTest extends PHPUnit_Framework_TestCase {
     );
     $search = Search::from_params($get);
     $this->assertEquals('/p4006coll2',$search->search_alias[0]);
+    $this->assertEquals('/p4006coll3',$search->search_alias[1]);
+  }
+  
+  public function testShouldSetSpecificAlias() {
+    $params = array(
+      'CISOROOT' => '/p4006coll2'
+    );
+    $search = Search::from_params($params);
+    
+    $this->assertEquals('/p4006coll2',$search->search_alias[0]);
+    $this->assertEquals(1,count($search->search_alias));
+  }
+  
+  public function testShouldSetMapAlias() {
+    $params = array(
+      'CISOROOT' => 'all',
+      'document-types' => array('map')
+    );
+    $search = Search::from_params($params);
+    
+    $this->assertEquals('/p129401coll3',$search->search_alias[0]);
+    $this->assertEquals(1,count($search->search_alias));
   }
 }
