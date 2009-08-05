@@ -51,11 +51,11 @@ if(isset($structure[$index['TITLE'][0]]["value"])) {
       <li class="zoom-pop">
         Full/Pop: 
         <a id="fullscreen_popup" href="/cgi-bin/getimage.exe?CISOROOT=<?=$alias?>&amp;CISOPTR=<?=$itnum?>&amp;DMSCALE=100" class="pop-full" title="<?= $doctitle ?> - full screen view">
-          <img src="<?= SEEKING_MICHIGAN_HOST ?>/images/icon-zoom-full.gif" alt="rotate left" />
+          <img src="<?= SEEKING_MICHIGAN_HOST ?>/images/icon-zoom-full.gif" alt="Full screen pop-up" />
         </a> 
         <? $popout_url = '/cgi-bin/getimage.exe?CISOROOT='.$alias.'&amp;CISOPTR='.$itnum.'&amp;DMWIDTH='.$facebox_images['fullscreen_popup']['width'].'&amp;DMHEIGHT='.$facebox_images['fullscreen_popup']['height']; ?>
         <a href="<?= $popout_url ?>" class="pop-new" title="New Window" target="_new">
-          <img src="<?= SEEKING_MICHIGAN_HOST ?>/images/icon-zoom-new.gif" alt="rotate left" />
+          <img src="<?= SEEKING_MICHIGAN_HOST ?>/images/icon-zoom-new.gif" alt="Full screen new window" />
         </a>
       </li>
     </ul>
