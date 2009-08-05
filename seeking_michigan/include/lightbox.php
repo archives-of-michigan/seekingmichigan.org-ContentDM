@@ -13,7 +13,7 @@
       scaling = Math.round((window_height / image_height) * 100);
     }
   
-    return('http://haldigitalcollections.cdmhost.com/cgi-bin/getimage.exe?CISOROOT=' + alias + '&amp;CISOPTR=' + itnum + '&amp;REC=1&amp;DMSCALE=' + scaling + '&amp;DMWIDTH=' + full_width + '&amp;DMHEIGHT=' + full_height + '&amp;type=.' + type);
+    return('http://haldigitalcollections.cdmhost.com/cgi-bin/getimage.exe?CISOROOT=' + alias + '&CISOPTR=' + itnum + '&REC=1&DMSCALE=' + scaling + '&DMWIDTH=' + full_width + '&DMHEIGHT=' + full_height + '&type=.' + type);
   }
 
   $(function() {
