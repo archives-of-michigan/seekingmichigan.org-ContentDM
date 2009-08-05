@@ -3,10 +3,13 @@ function display_metadata($alias, $item, $conf) {
   dmGetCollectionFullResInfo($alias,$enabled,$public,$volprefix,$volsize,$displaysize,$archivesize);
   $fullres = "";
   $std_fields = array();
+  
+  
   for($i = 0; $i < count($conf); $i++) {
     $tag = strtoupper($conf[$i]["nick"]);
     if($conf[$i]["type"] != "FTS" && array_key_exists($tag,$item['index']) && 
-       array_key_exists("value",$item['structure'][$item['index'][$tag][0]])) {
+       array_key_exists("value",$item['structure'][$item['index'][$tag][0]]) &&
+       $conf[$i]['hide'] != 1) {
        $value = '';
        if($conf[$i]["type"] == "DATE") {
          $value = linkDate($item['structure'][$item['index'][$tag][0]]["value"],$alias,$conf[$i]["nick"]);
@@ -22,6 +25,12 @@ function display_metadata($alias, $item, $conf) {
        $std_fields[] = array('field' => $conf[$i]["name"], 'value' => $value);
      }
   }
+  
+  echo('<!--');
+  var_dump($conf);
+  echo('-->');
+  
   include('meta_scr_template.php');
 }
 ?>
+
