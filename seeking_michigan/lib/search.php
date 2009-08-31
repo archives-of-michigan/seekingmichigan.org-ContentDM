@@ -14,7 +14,6 @@ class Search {
     $this->search_alias = $_search_alias;
     $this->sortby       = $_sortby;
     $this->field        = $_field;
-    $this->sortby       = $_sortby;
     $this->searchstring = $_searchstring;
     $this->maxrecs      = $_maxrecs;
     $this->start        = $_start;
