@@ -6,7 +6,7 @@ class Search {
   function __construct(
       $_search_alias = array(),
       $_field = array('title','subjec','descri','creato','date','type','format'),
-      $_sortby = array('title'),
+      $_sortby = array(),
       $_searchstring = array(),
       $_maxrecs = 1024,
       $_start = array(1,1)
@@ -43,7 +43,6 @@ class Search {
     $search->search_alias = $alias;
 
     $search->maxrecs = 20;
-    $search->sortby = array('title');
 
     $search->searchstring = Search::generate_search_string($params);
     

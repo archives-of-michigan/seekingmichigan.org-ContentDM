@@ -38,4 +38,14 @@ class SearchFromParamsTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals('/p129401coll3',$search->search_alias[0]);
     $this->assertEquals(1,count($search->search_alias));
   }
+  
+  public function testShouldSetSortby() {
+    $params = array(
+      'CISOROOT' => 'all',
+      'document-types' => array('map')
+    );
+    $search = Search::from_params($params);
+    
+    $this->assertEquals(array(),$search->sortby);
+  }
 }
