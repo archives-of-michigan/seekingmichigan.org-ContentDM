@@ -6,7 +6,7 @@ class Search {
   function __construct(
       $_search_alias = array(),
       $_field = array('title','subjec','descri','creato','date','type','format'),
-      $_sortby = array(),
+      $_sortby = array('title'),
       $_searchstring = array(),
       $_maxrecs = 1024,
       $_start = array(1,1)

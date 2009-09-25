@@ -46,6 +46,6 @@ class SearchFromParamsTest extends PHPUnit_Framework_TestCase {
     );
     $search = Search::from_params($params);
     
-    $this->assertEquals(array(),$search->sortby);
+    $this->assertEquals(array('title'),$search->sortby);
   }
 }
