@@ -55,7 +55,7 @@
     <div id="utility-bar">
       <div class="wrapper">
         <ul class="breadcrumbs">
-          <li><a href="#">Home</a> &raquo; </li>
+          <li><a href="<?= SEEKING_MICHIGAN_HOST ?>/">Home</a> &raquo; </li>
           <? $last_item = end($breadcrumbs); ?>
           <? foreach($breadcrumbs as $crumb => $link): ?>
             <li <? if(!$link): ?>class="here"<? endif; ?>>
