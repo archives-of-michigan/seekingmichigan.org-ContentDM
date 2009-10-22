@@ -62,7 +62,7 @@ if($isthisImage){
   define("LIGHTBOX",'display');
   define('DMMONOCLE','display');
   $js_includes = array('jquery-ui-1.7.1.custom.min', 'jquery.event.drag-1.5.min', 'dmmonocle.min');
-  $css_includes = array('dmmonocle','smoothness/jquery-ui-1.7.custom.css');
+  $css_includes = array('dmmonocle','smoothness/jquery-ui-1.7.custom');
   
   $lightbox_images = array(
     'fullscreen_popup' => array(
