@@ -26,10 +26,6 @@ function display_metadata($alias, $item, $conf) {
      }
   }
   
-  echo('<!--');
-  var_dump($conf);
-  echo('-->');
-  
   include('meta_scr_template.php');
 }
 ?>
