@@ -4,6 +4,7 @@ $rc = dmGetItemInfo($alias, $itnum, $data);
 $parser = xml_parser_create();
 xml_parse_into_struct($parser, $data, $structure, $index);
 xml_parser_free($parser);
+$dmrotate = (isset($_GET["DMROTATE"])) ? $_GET["DMROTATE"] : '0';
 if(isset($structure[$index['TITLE'][0]]["value"])) {
   $item_title = $structure[$index['TITLE'][0]]["value"];
 }
