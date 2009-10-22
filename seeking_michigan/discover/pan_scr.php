@@ -71,13 +71,6 @@ else {
   $image_text = $res["image_text"];
 
   $image_src = $res["image_src"];
-  $image_oldscale = $res["image_oldscale"];
-  $image_currentscale = $res["image_currentscale"];
-  $image_guide_src = $res["image_guide_src"];
-  $image_thumbnail_width = $res["image_thumbnail_width"];
-
-  $image_rotateleft_link = $res["image_rotateleft_link"];
-  $image_rotateright_link = $res["image_rotateright_link"];
 }
 
 /* Calculate the parameters for the image viewer */
@@ -445,46 +438,5 @@ function &GetImageParameters($inputarray) {
   }
 
   return($res);
-}
-
-/* Return the next scale value */
-function NextScale($scale,$step,$numsteps,$p) {
-  $match = -1;
-  if ($p == 0) {    /* Next smaller */
-    for ($i = 0; $i < $numsteps; $i++) {
-      if ($scale <= $step[$i]) {
-        $match = $i;
-        break;
-      }
-    }
-    $match--;
-    if ($match < 0) {
-      return($step[0]);
-    }
-    else {
-      return($step[$match]);
-    }
-  }
-  else {           /* Next bigger */
-    for ($i = $numsteps-1; $i >= 0; $i--) {
-      if ($scale >= $step[$i]) {
-        $match = $i;
-        break;
-      }
-    }
-    $match++;
-    if ($match == $numsteps) {
-      return($step[$numsteps-1]);
-    }
-    else {
-      return($step[$match]);
-    }
-  }
-}
-
-function zoom_link($alias, $ptr, $step, $width, $height, $x, $y, $dmtext, $dmrec, $dmrotate) {
-  $base_url = "CISOROOT=".$alias."&amp;CISOPTR=".$ptr;
-  $dmtext = str_replace('%2520','%20',urlencode($dmtext));
-  return($base_url."&amp;DMSCALE=".$step. "&amp;DMWIDTH=".$width."&amp;DMHEIGHT=".$height."&amp;DMX=".$x."&amp;DMY=".$y."&amp;DMTEXT=".$dmtext."&amp;REC=".$dmrec."&amp;DMROTATE=".$dmrotate);
 }
 ?>

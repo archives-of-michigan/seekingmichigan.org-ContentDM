@@ -15,6 +15,13 @@
   <link rel="stylesheet" href="<?= SEEKING_MICHIGAN_HOST ?>/css/screen/patches/win-ie-old.css" type="text/css" media="screen, projection" />
   <script type="text/javascript" src="<?= SEEKING_MICHIGAN_HOST ?>/js/lib/dd-png.js"></script>
   <![endif]-->
+  <? foreach($css_includes as $css): ?>
+    <? if(preg_match('/^http:\/\//',$css) > 0): ?>
+      <link rel="stylesheet" href="<?= $css ?>" type="text/css" media="screen, projection" />
+    <? else: ?>
+      <link rel="stylesheet" href="<?= SEEKING_MICHIGAN_HOST ?>/css/<?= $css ?>.css" type="text/css" media="screen, projection" />
+    <? endif; ?>
+  <? endforeach; ?>
   <script type="text/javascript" src="<?= SEEKING_MICHIGAN_HOST ?>/js/core.js"></script>
   <script type="text/javascript" src="<?= SEEKING_MICHIGAN_HOST ?>/js/jquery.js"></script>
   <? foreach($js_includes as $js): ?>
@@ -35,8 +42,12 @@
   <? if(LIGHTBOX == 'display'): ?>
     <? include('include/lightbox.php'); ?>
   <? endif; ?>
-  <? if(SLIDER == 'display'): ?>
-    <? include('include/slider.php'); ?>
+  <? if(DMMONOCLE == 'display'): ?>
+    <script type="text/javascript">
+      $(window).ready(function() {
+        dmMonocle(<?=$image_width?>, <?=$image_height?>, <?=$image_cisoptr?>, "<?=$image_cisoroot?>");
+      });
+    </script>
   <? endif; ?>
 </head>
 <body id="www.seekingmichigan.com" class="<?= BODY_CLASS ?>">
