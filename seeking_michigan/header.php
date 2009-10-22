@@ -23,7 +23,7 @@
     <? endif; ?>
   <? endforeach; ?>
   <script type="text/javascript" src="<?= SEEKING_MICHIGAN_HOST ?>/js/core.js"></script>
-  <script type="text/javascript" src="<?= SEEKING_MICHIGAN_HOST ?>/js/jquery.js"></script>
+  <script type="text/javascript" src="<?= SEEKING_MICHIGAN_HOST ?>/js/jquery.min.js"></script>
   <? foreach($js_includes as $js): ?>
     <? if(preg_match('/^http:\/\//',$js) > 0): ?>
       <script type="text/javascript" src="<?= $js ?>"></script>
