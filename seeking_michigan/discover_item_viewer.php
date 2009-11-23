@@ -57,6 +57,8 @@ $doctitle = $display_item['structure'][$display_item['index']["TITLE"][0]]["valu
 $isthisImage = in_array($filetype,$isImage);
 if($isthisImage){
   dmGetCollectionImageSettings($alias, $pan_enabled, $minjpegdim, $zoomlevels, $maxderivedimg, $viewer, $docviewer, $compareviewer, $slideshowviewer);
+  $filename = $type = $width = $height = '';
+  $image_info = dmGetImageInfo($alias, $itnum, $filename, $type, $width, $height);
   include("discover/pan_scr.php");
   define("FACEBOX",'display');
   define("LIGHTBOX",'display');
@@ -74,8 +76,6 @@ if($isthisImage){
   // full-screen view settings
   if($lightbox_images) {
     foreach($lightbox_images as $id => $data) {
-      $filename = $type = $width = $height = '';
-      $image_info = dmGetImageInfo($alias, $itnum, $filename, $type, $width, $height);
       $lightbox_images[$id]['filename'] = $filename;
       $lightbox_images[$id]['type'] = $type;
       $lightbox_images[$id]['width'] = $width;

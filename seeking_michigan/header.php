@@ -45,7 +45,7 @@
   <? if(DMMONOCLE == 'display'): ?>
     <script type="text/javascript">
       $(window).ready(function() {
-        dmMonocle(<?=$image_width?>, <?=$image_height?>, <?=$image_cisoptr?>, "<?=$image_cisoroot?>");
+        dmMonocle(<?=$width?>, <?=$height?>, <?=$image_cisoptr?>, "<?=$image_cisoroot?>");
       });
     </script>
   <? endif; ?>
