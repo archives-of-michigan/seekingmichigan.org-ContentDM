@@ -1,4 +1,4 @@
-<?
+<?php
 if(TEST_ENV != 'TEST') { require_once dirname(__FILE__)."/../../dmscripts/DMSystem.php"; }
 require_once 'content_dm.php';
 
@@ -59,6 +59,16 @@ class Search {
   }
 
   public function results() {
+    echo "<!-- query params ";
+    echo var_dump($this->search_alias).' ';
+    echo var_dump($this->searchstring).' ';
+    echo var_dump($this->field).' ';
+    echo var_dump($this->sortby).' ';
+    echo var_dump($this->maxrecs).' ';
+    echo var_dump($this->start[1]).' ';
+    echo var_dump($this->total).' ';
+    echo " --> ";
+
     $results = dmQuery(
           $this->search_alias,
           $this->searchstring,
@@ -93,7 +103,6 @@ class Search {
   }
   
   public static function generate_search_string($query_params) {
-    global $thisfile;
     $s = array();
     if(isset($query_params["CISOPARM"])){
       $parm = explode(":",$query_params["CISOPARM"]);
@@ -103,7 +112,7 @@ class Search {
       $s = array_values($s);
       return($s);
     } else if((!isset($query_params["CISOPARM"])) && (isset($query_params["CISOROOT"]))){
-      if(!isset($query_params["CISOBOX1"]) || $query_params["CISOBOX1"] == '') { $query_params["CISOBOX1"] = ' '; }
+      if(!isset($query_params["CISOBOX1"]) || $query_params["CISOBOX1"] == '') { $query_params["CISOBOX1"] = ''; }
       if(!isset($query_params["CISOFIELD1"]) || $query_params["CISOFIELD1"] == '') { $query_params["CISOFIELD1"] = 'CISOSEARCHALL'; }
       if(!isset($query_params["CISOOP1"]) || $query_params["CISOOP1"] == '') { $query_params["CISOOP1"] = 'any'; }
     
@@ -163,4 +172,3 @@ class Search {
     return $search;
   }
 }
-?>
