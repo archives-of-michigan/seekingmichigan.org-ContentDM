@@ -59,16 +59,6 @@ class Search {
   }
 
   public function results() {
-    echo "<!-- query params ";
-    echo var_dump($this->search_alias).' ';
-    echo var_dump($this->searchstring).' ';
-    echo var_dump($this->field).' ';
-    echo var_dump($this->sortby).' ';
-    echo var_dump($this->maxrecs).' ';
-    echo var_dump($this->start[1]).' ';
-    echo var_dump($this->total).' ';
-    echo " --> ";
-
     $results = dmQuery(
           $this->search_alias,
           $this->searchstring,
@@ -78,7 +68,6 @@ class Search {
           $this->start[1],
           $this->total,
           1);
-    
     return($results);
   }
   
