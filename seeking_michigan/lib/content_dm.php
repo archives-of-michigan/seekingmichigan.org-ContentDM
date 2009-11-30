@@ -1,7 +1,6 @@
 <?
 class ContentDM {
   public static function get_alias($params) {
-    global $thisfile,$specifyCollection;
     $a = array();
     if(isset($params["CISOPARM"])){
       $parm = explode(":",urldecode($params["CISOPARM"]));

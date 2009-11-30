@@ -609,7 +609,6 @@ return $endstr;
 
 
 function getAlias(){
-  global $thisfile,$specifyCollection;
   return ContentDM::get_alias($_GET);
 }
 
@@ -625,7 +624,6 @@ return($set);
 }
 
 function getSearchStr() {
-  global $thisfile;
   return(Search::generate_search_string($_GET));
 }
 
