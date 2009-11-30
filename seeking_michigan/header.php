@@ -74,14 +74,6 @@
             </li>
           <? endforeach; ?>
         </ul>
-        <div class="search">
-          <form id="global-search" action="<?= SEEKING_MICHIGAN_HOST ?>" method="get" >
-            <label for="s" class="hidden">Seek: </label>
-            <input type="text" name="s" id="s" value=" " />
-            <label for="search-button" class="hidden">Search </label>
-            <input type="submit" value=" " id="search-button" name="search-button" />
-          </form>
-        </div>
       </div>
     </div>
     <div id="main">
