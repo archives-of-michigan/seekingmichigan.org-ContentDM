@@ -42,7 +42,7 @@ if($base_type == 'image') {
 }
 ?>
 <? if($base_type == 'pdf'): ?>
-  <? header("Location: http://haldigitalcollections.cdmhost.com/cgi-bin/showpdf.exe?CISOROOT=".$alias."&CISOPTR=".$itnum); ?>
+  <? header("Location: http://seekingmichigan.cdmhost.com/cgi-bin/showpdf.exe?CISOROOT=".$alias."&CISOPTR=".$itnum); ?>
 <? else: ?>
   <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
   <html xmlns="http://www.w3.org/1999/xhtml">

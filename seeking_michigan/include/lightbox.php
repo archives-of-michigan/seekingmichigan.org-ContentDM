@@ -13,7 +13,7 @@
       scaling = Math.round((window_height / image_height) * 100);
     }
   
-    return('http://haldigitalcollections.cdmhost.com/cgi-bin/getimage.exe?CISOROOT=' + alias + '&CISOPTR=' + itnum + '&REC=1&DMSCALE=' + scaling + '&DMWIDTH=' + full_width + '&DMHEIGHT=' + full_height + '&type=.' + type);
+    return('http://seekingmichigan.cdmhost.com/cgi-bin/getimage.exe?CISOROOT=' + alias + '&CISOPTR=' + itnum + '&REC=1&DMSCALE=' + scaling + '&DMWIDTH=' + full_width + '&DMHEIGHT=' + full_height + '&type=.' + type);
   }
 
   $(function() {

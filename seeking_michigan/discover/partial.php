@@ -22,12 +22,12 @@ class Partial {
       $scaled_height = $dimensions[1];
       $scaling_factor = $dimensions[2];
       
-      $file_url = "http://haldigitalcollections.cdmhost.com/cgi-bin/getimage.exe?CISOROOT=".$alias."&amp;CISOPTR=".$itnum;
+      $file_url = "http://seekingmichigan.cdmhost.com/cgi-bin/getimage.exe?CISOROOT=".$alias."&amp;CISOPTR=".$itnum;
       $file_url .= "&amp;DMWIDTH=".$scaled_width."&amp;DMHEIGHT=".$scaled_height."&amp;DMSCALE=".$scaling_factor;
     } else {
       $is_image = false;
-      $file_url = "http://haldigitalcollections.cdmhost.com/cgi-bin/showfile.exe?CISOROOT=".$alias."&amp;CISOPTR=".$itnum;
-      $encoded_file_url = urlencode("http://haldigitalcollections.cdmhost.com/cgi-bin/showfile.exe?CISOROOT=".$alias."&amp;CISOPTR=".$itnum);
+      $file_url = "http://seekingmichigan.cdmhost.com/cgi-bin/showfile.exe?CISOROOT=".$alias."&amp;CISOPTR=".$itnum;
+      $encoded_file_url = urlencode("http://seekingmichigan.cdmhost.com/cgi-bin/showfile.exe?CISOROOT=".$alias."&amp;CISOPTR=".$itnum);
     }
   
     include('basic_view.php');
