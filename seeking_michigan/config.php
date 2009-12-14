@@ -1,4 +1,13 @@
 <?
+if(preg_match('/haldigitalcollections/',$_SERVER['HTTP_HOST'])) {
+  $redirect_string = 'http://seekingmichigan.cdmhost.com'.$_SERVER['PHP_SELF'];
+  if($_SERVER['QUERY_STRING']) {
+    $redirect_string .= '?'.@$_SERVER['QUERY_STRING'];
+  }
+  header('Location: '.$redirect_string);
+  exit();
+}
+
 define("SEEKING_MICHIGAN_HOST","http://seekingmichigan.org");
 
 include('vendor/framework/lib/application.php');
