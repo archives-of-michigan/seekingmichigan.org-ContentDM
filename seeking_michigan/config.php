@@ -1,6 +1,14 @@
 <?
 define("SEEKING_MICHIGAN_HOST","http://seekingmichigan.org");
 
+include('vendor/framework/lib/application.php');
+$SM_APP = new Application;
+
+function app() {
+  global $SM_APP;
+  return $SM_APP;
+}
+
 $isImage = array('gif','jpg','tif','tiff','jp2');
 $isBasicImage = array('gif','jpg');
 $isPopup = array('slideshow.php','compare.php','clip.php','clipped.php','page_text.php','side_side.php','cliparticle.php','subset.php');
