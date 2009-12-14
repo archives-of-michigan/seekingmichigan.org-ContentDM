@@ -70,7 +70,7 @@ $title = 'Results : Seek &mdash; Seeking Michigan';
 $collections = dmGetCollectionList();
 
 $title = 'Results : Seek &mdash; Seeking Michigan';
-$breadcrumbs = array('Seek' => 'seek_advanced.php', 'Search Results' => '');
+$breadcrumbs = array('Home' => SEEKING_MICHIGAN_HOST, 'Seek' => 'seek_advanced.php', 'Search Results' => '');
 define("BODY_CLASS","seek");
 include('header.php');
 ?>

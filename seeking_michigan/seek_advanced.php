@@ -6,7 +6,7 @@ function show_criterion($num) {
 include("config.php");
 
 $title = 'Advanced: Seek &mdash; Seeking Michigan';
-$breadcrumbs = array('Seek' => 'seek_advanced.php', 'Advanced Search' => '');
+$breadcrumbs = array('Home' => SEEKING_MICHIGAN_HOST, 'Seek' => 'seek_advanced.php', 'Advanced Search' => '');
 define("BODY_CLASS","seek");
 $js_includes = array('advanced_search');
 include('header.php');

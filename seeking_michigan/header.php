@@ -1,4 +1,7 @@
-<? $js_includes = isset($js_includes) ? $js_includes : array(); ?>
+<? 
+$js_includes = isset($js_includes) ? $js_includes : array();
+$breadcrumbs = isset($breadcrumbs) ? $breadcrumbs : array('Home' => '');
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -66,15 +69,7 @@
     </div>
     <div id="utility-bar">
       <div class="wrapper">
-        <ul class="breadcrumbs">
-          <li><a href="<?= SEEKING_MICHIGAN_HOST ?>/">Home</a> &raquo; </li>
-          <? $last_item = end($breadcrumbs); ?>
-          <? foreach($breadcrumbs as $crumb => $link): ?>
-            <li <? if(!$link): ?>class="here"<? endif; ?>>
-              <? if($link): ?><a href="<?= $link ?>"><?= $crumb ?></a> &raquo; <? else: ?><?= $crumb ?><? endif; ?>
-            </li>
-          <? endforeach; ?>
-        </ul>
+        <?php app()->partial('breadcrumbs', array('breadcrumbs' => $breadcrumbs)); ?>
       </div>
     </div>
     <div id="main">

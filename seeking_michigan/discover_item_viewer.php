@@ -88,6 +88,7 @@ if($isthisImage){
 $title = 'Viewer  &mdash; Seeking Michigan &mdash; '.$doctitle;
 $collection_url = SEEKING_MICHIGAN_HOST.'/discover-collection?collection='.$trimmed_alias;
 $breadcrumbs = array(
+  'Home' => SEEKING_MICHIGAN_HOST,
   'Discover' => SEEKING_MICHIGAN_HOST.'/discover',
   'Collections' => SEEKING_MICHIGAN_HOST.'/discover',
   $collection_name => $collection_url, 
