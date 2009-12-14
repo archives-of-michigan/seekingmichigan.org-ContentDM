@@ -35,7 +35,8 @@
   <script type="text/javascript">
     try { _gat._getTracker("UA-7441223-2")._trackPageview(); } catch(err) {}
   </script>
-  <? include('banners.php'); ?>
+  <?php app()->partial('banner', 
+                       array('scene' => app()->helper('header')->banner_scene())); ?>
   <? if(FACEBOX == 'display'): ?>
     <? include('include/facebox.php'); ?>
   <? endif; ?>
