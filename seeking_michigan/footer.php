@@ -22,7 +22,7 @@
             <li><a href="<?= SEEKING_MICHIGAN_HOST ?>/archive">Archives</a></li>
             <li><a href="<?= SEEKING_MICHIGAN_HOST ?>/copyright">Copyright</a></li>
           </ul>
-          <p>&copy; 2008 <a href="<?= SEEKING_MICHIGAN_HOST ?>">SeekingMichigan.org</a>. All Rights Reserved.  </p>
+          <p>&copy; 2008-<?= date('Y'); ?> <a href="<?= SEEKING_MICHIGAN_HOST ?>">SeekingMichigan.org</a>. All Rights Reserved.  </p>
         </div>
       </div>
     </div>
