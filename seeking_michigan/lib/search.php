@@ -59,7 +59,13 @@ class Search {
 
   public static function chunk_simple_search_string($string) {
     $chunks = array('any' => array(), 'exact' => array());
-    preg_match('/"([^"])"/', $string, $matches);
+    preg_match('/"([^"])"/', $string, $exact_matches);
+
+    foreach($exact_matches => $match) {
+      
+    }
+
+    $string = preg_replace('/"[^"]"/', '', $string);
 
     return $chunks;
   }
@@ -67,6 +73,17 @@ class Search {
   public static function complexify_simple_search_params(&$params) {
     if(isset($params['s'])) {
       Search::default_for($params, 'CISOROOT', 'any');
+
+      $chunks = Search::chunk_simple_search_string($params['s']);
+      $counter = 0;
+      foreach(array('any','exact') => $type) {
+        foreach($chunks[$type] => $chunk) {
+          $params["CISOFIELD$counter"] = 'CISOSEARCHALL';
+          $params["CISOBOX$counter"] = $chunk;
+          $params["CISOOP$counter"] = $type;
+          $counter++;
+        }
+      }
     }
 
     return $params;
