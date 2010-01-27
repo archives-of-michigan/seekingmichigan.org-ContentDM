@@ -1,4 +1,5 @@
 <?php
+require_once dirname(__FILE__).'/../../test_helper.php';
 require_once dirname(__FILE__).'/../../../seeking_michigan/lib/search.php';
 
 class SearchFromParamsTest extends PHPUnit_Framework_TestCase {
@@ -47,5 +48,17 @@ class SearchFromParamsTest extends PHPUnit_Framework_TestCase {
     $search = Search::from_params($params);
     
     $this->assertEquals(array('title'),$search->sortby);
+  }
+
+  public function testShouldParseSimpleSearch() {
+    $params = array(
+      's' => 'Lansing mayor',
+    );
+    $search = Search::from_params($params);
+    
+    $this->assertEquals(13,count($search->search_alias));
+    $this->assertEquals('Lansing mayor', $search->searchstring[0]['string']);
+    $this->assertEquals($search->field, $search->searchstring[0]['field']);
+    $this->assertEquals('any', $search->searchstring[0]['mode']);
   }
 }

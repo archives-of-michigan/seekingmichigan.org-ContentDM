@@ -1,0 +1,9 @@
+watch('test/.*Test\.php') do |md|
+  puts "\e[H\e[2J"
+  system("phpunit #{md[0]}")
+end
+watch('seeking_michigan/lib/(.*)\.php') do |md|
+  puts "\e[H\e[2J"
+  testpath = md[1].sub(/./) { |s| s.upcase }
+  system("phpunit test/lib/#{testpath}")
+end
