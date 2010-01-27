@@ -24,4 +24,5 @@ if(isset($structure[$index['TITLE'][0]]["value"])) {
   <? prev_next_compound($isthisCompoundObject, $show_all, $previous_item, $next_item, $current_item_num, 
                         $totalitems, $encoded_seek_search_params, $search_position, $alias, $parent_itnum); ?>
   <? prev_next_search($seek_search_params,$search_position); ?>
+  <? partial('buy', $alias, $parent_item); ?>
 </div>
