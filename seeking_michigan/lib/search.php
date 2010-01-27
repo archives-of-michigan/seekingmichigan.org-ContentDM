@@ -37,13 +37,12 @@ class Search {
   }
   
   public static function from_params($params) {
-    $search = new Search();
+    Search::complexify_simple_search_params($params);
 
     $alias = array_values(ContentDM::get_alias($params));
+    $search = new Search();
     $search->search_alias = $alias;
-
     $search->maxrecs = 20;
-
     $search->searchstring = Search::generate_search_string($params);
     
     if(isset($params['document-types'])) {
@@ -56,6 +55,21 @@ class Search {
     $search->start = split(',',$start);
 
     return($search);
+  }
+
+  public static function chunk_simple_search_string($string) {
+    $chunks = array('any' => array(), 'exact' => array());
+    preg_match('/"([^"])"/', $string, $matches);
+
+    return $chunks;
+  }
+
+  public static function complexify_simple_search_params(&$params) {
+    if(isset($params['s'])) {
+      Search::default_for($params, 'CISOROOT', 'any');
+    }
+
+    return $params;
   }
 
   public function results() {
@@ -90,6 +104,12 @@ class Search {
   public function term_search_string($alias, $term) {
     return 'CISOROOT='.$alias.'&amp;CISOOP1=any&amp;CISOFIELD1=CISOSEARCHALL&amp;CISOBOX1='.$term;
   }
+
+  public static function default_for(&$array, $name, $default) {
+    if(!isset($array[$name]) || $array[$name] == '') {
+      $array[$name] = $default;
+    }
+  }
   
   public static function generate_search_string($query_params) {
     $s = array();
@@ -101,33 +121,19 @@ class Search {
       $s = array_values($s);
       return($s);
     } else if((!isset($query_params["CISOPARM"])) && (isset($query_params["CISOROOT"]))){
-      if(!isset($query_params["CISOBOX1"]) || $query_params["CISOBOX1"] == '') { $query_params["CISOBOX1"] = ''; }
-      if(!isset($query_params["CISOFIELD1"]) || $query_params["CISOFIELD1"] == '') { $query_params["CISOFIELD1"] = 'CISOSEARCHALL'; }
-      if(!isset($query_params["CISOOP1"]) || $query_params["CISOOP1"] == '') { $query_params["CISOOP1"] = 'any'; }
-    
-      if(isset($query_params["CISOBOX1"]) && ($query_params["CISOBOX1"] != "")){
-        $s[0]["field"] = $query_params["CISOFIELD1"];
-        $s[0]["string"] = $query_params["CISOBOX1"];
-        $s[0]["mode"] = $query_params["CISOOP1"];
-      }
-      if(isset($query_params["CISOBOX2"]) && ($query_params["CISOBOX2"] != "")){
-        $s[1]["field"] = $query_params["CISOFIELD2"];
-        $s[1]["string"] = $query_params["CISOBOX2"];
-        $s[1]["mode"] = $query_params["CISOOP2"];
-      }
-      if(isset($query_params["CISOBOX3"]) && ($query_params["CISOBOX3"] != "")){
-        $s[2]["field"] = $query_params["CISOFIELD3"];
-        $s[2]["string"] = $query_params["CISOBOX3"];
-        $s[2]["mode"] = $query_params["CISOOP3"];
-      }
-      if(isset($query_params["CISOBOX4"]) && ($query_params["CISOBOX4"] != "")){
-        $s[3]["field"] = $query_params["CISOFIELD4"];
-        $s[3]["string"] = $query_params["CISOBOX4"];
-        $s[3]["mode"] = $query_params["CISOOP4"];
+      Search::default_for($query_params, 'CISOBOX1', ' ');
+      Search::default_for($query_params, 'CISOFIELD1', 'CISOSEARCHALL');
+      Search::default_for($query_params, 'CISOOP1', 'any');
+      for($i = 1; $i <= 4; $i++) {
+        $idx = $i - 1;
+        if(isset($query_params["CISOBOX$i"]) && ($query_params["CISOBOX$i"] != "")){
+          $s[$idx]["field"] = $query_params["CISOFIELD$i"];
+          $s[$idx]["string"] = $query_params["CISOBOX$i"];
+          $s[$idx]["mode"] = $query_params["CISOOP$i"];
+        }
       }
       
       $s = array_merge($s, Search::generate_content_type_search_string($query_params));
-      
       $s = array_values($s);
       return($s);
     }
