@@ -18,6 +18,12 @@ function app() {
   return $SM_APP;
 }
 
+app()->add_partial_root('cdm', real_path('./include/partials'));
+app()->add_helpers(array(
+  real_path('./lib/helpers/prev_next_compound.php'),
+  real_path('./lib/helpers/seek_results.php')
+));
+
 $isImage = array('gif','jpg','tif','tiff','jp2');
 $isBasicImage = array('gif','jpg');
 $isPopup = array('slideshow.php','compare.php','clip.php','clipped.php','page_text.php','side_side.php','cliparticle.php','subset.php');

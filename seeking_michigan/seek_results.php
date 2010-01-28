@@ -93,24 +93,11 @@ include('header.php');
       <div class="wrapper">
     <h2>Collection Results</h2>
     <p class="intro">The results for your search are listed below.  You can narrow your search results by following the links listed for each category.</p>
-    <form id="browse-search" action="seek_results.php">
-      <input type="hidden" name="CISOOP1" value="any" />
-      <input type="hidden" name="CISOFIELD1" value="CISOSEARCHALL" />
-      <input type="hidden" name="CISOBOX1" value="<?= $_GET['CISOBOX1']; ?>" />
-      <p>
-        Browsing <strong><?= $num_records_this_page; ?></strong> items in 
-        <select name="CISOROOT">
-          <option value="all" <? if($_GET['CISOROOT'] == 'CISOSEARCHALL'): ?>selected="selected"<? endif; ?>>
-            All Collections</option>
-          <? foreach($collections as $collection): ?>
-            <option value="<?= $collection['alias']; ?>" <? if($_GET['CISOROOT'] == $collection['alias']): ?>selected="selected"<? endif; ?>>
-              <?= $collection['name']; ?></option>
-          <? endforeach; ?>
-        </select>
-        <input type="image" src="<?= SEEKING_MICHIGAN_HOST ?>/images/search-button.gif" value=" " />  
-        Or use <a href="seek_advanced.php">Advanced Search &raquo; </a>
-      </p>
-    </form>
+    <? app()->partial('search_category', 
+                      array(
+                        'search_fields' => app()->helper('seek_results')->search_fields_without_alias($search),
+                        'num_records_this_page' => $num_records_this_page,
+                        'collections' => $collections));
     <div class="paginate">
       <? include('seek/results_sub.php'); ?>
     </div>
