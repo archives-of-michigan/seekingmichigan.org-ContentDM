@@ -24,7 +24,7 @@ class SearchTermsTest extends PHPUnit_Framework_TestCase {
       'search-button.y' => '19',
       'search-button' => ''
     );
-    $this->search->searchstring = Search::generate_search_string($params);
+    $this->search->set_search_string($params);
     
     $terms = $this->search->terms();
     sort($terms);

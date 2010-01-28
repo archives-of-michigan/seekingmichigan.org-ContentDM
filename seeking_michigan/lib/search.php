@@ -3,29 +3,36 @@ if(TEST_ENV != 'TEST') { require_once dirname(__FILE__)."/../../dmscripts/DMSyst
 require_once 'content_dm.php';
 
 class Search {
+
+  public $search_alias;
+  public $sortby;
+  public $field;
+  public $search_string;
+  public $maxrecs;
+  public $start;
+  public $total;
+  public $document_types;
+  public $media_types;
+
   function __construct(
       $_search_alias = array(),
       $_field = array('title','subjec','descri','creato','date','type','format'),
       $_sortby = array('title'),
-      $_searchstring = array(),
+      $_search_string = array(),
       $_maxrecs = 1024,
-      $_start = array(1,1)
+      $_start = array(1,1),
+      $_document_types = array(),
+      $_media_types = array()
     ) {
     $this->search_alias = $_search_alias;
     $this->sortby       = $_sortby;
     $this->field        = $_field;
-    $this->searchstring = $_searchstring;
+    $this->search_string = $_search_string;
     $this->maxrecs      = $_maxrecs;
     $this->start        = $_start;
+    $this->document_types = $_document_types;
+    $this->media_types = $_media_types;
   }
-  
-  public $search_alias;
-  public $sortby;
-  public $field;
-  public $searchstring;
-  public $maxrecs;
-  public $start;
-  public $total;
   
   public static function from_param_string($param_string) {
     parse_str(
@@ -39,17 +46,18 @@ class Search {
   public static function from_params($params) {
     Search::complexify_simple_search_params($params);
 
-    $alias = array_values(ContentDM::get_alias($params));
     $search = new Search();
-    $search->search_alias = $alias;
+    $search->search_alias = array_values(ContentDM::get_alias($params));
     $search->maxrecs = 20;
-    $search->searchstring = Search::generate_search_string($params);
-    
     if(isset($params['document-types'])) {
-      if(in_array('map',$params['document-types'])) {
-        $search->search_alias = array('/p129401coll3');
-      }
+      $search->set_document_types($params['document-types']);
     }
+    if(isset($params['media-types'])) {
+      $search->media_types = $params['media-types'];
+    } else if(isset($query_params['media-types%5B%5D'])) {
+      $search->media_types = $params['media-types%5B%5D'];
+    }
+    $search->set_search_string($params);
 
     $start = (isset($params['CISOSTART'])) ? $params['CISOSTART'] : "1,1";
     $search->start = split(',',$start);
@@ -96,10 +104,17 @@ class Search {
     return $params;
   }
 
+  public function set_document_types($doctypes) {
+    $this->document_types = $doctypes;
+    if(in_array('map',$doctypes)) {
+      $this->search_alias = array('/p129401coll3');
+    }
+  }
+
   public function results() {
     $results = dmQuery(
           $this->search_alias,
-          $this->searchstring,
+          $this->search_string,
           $this->field,
           $this->sortby,
           $this->maxrecs,
@@ -110,10 +125,10 @@ class Search {
   }
   
   public function terms() {
-    if(count($this->searchstring) > 0) {
+    if(count($this->search_string) > 0) {
       $terms = array();
       
-      foreach($this->searchstring as $box) {
+      foreach($this->search_string as $box) {
         if($box['field'] == 'format') { continue; }
         
         $terms = array_merge($terms, explode(' ', $box['string']));
@@ -129,65 +144,68 @@ class Search {
     return 'CISOROOT='.$alias.'&amp;CISOOP1=any&amp;CISOFIELD1=CISOSEARCHALL&amp;CISOBOX1='.$term;
   }
 
+  public function form_fields($overrides = array()) {
+    $fields = array();
+
+    $fields['CISOROOT'] = join(',', $this->search_alias);
+    $counter = 1;
+    foreach($this->search_string as $string) {
+      $fields["CISOBOX$counter"] = $string['string'];
+      $fields["CISOOP$counter"] = $string['mode'];
+      $fields["CISOFIELD$counter"] = $string['field'];
+      $counter++;
+    }
+    $fields['CISOSTART'] = join(',',$this->start);
+
+    return array_merge($fields, $overrides);
+  }
+
   public static function default_for(&$array, $name, $default) {
     if(!isset($array[$name]) || $array[$name] == '') {
       $array[$name] = $default;
     }
   }
   
-  public static function generate_search_string($query_params) {
-    $s = array();
-    if(isset($query_params["CISOPARM"])){
-      $parm = explode(":",$query_params["CISOPARM"]);
-      $s[0]["field"] = $parm[1];
-      $s[0]["string"] = $parm[2];
-      $s[0]["mode"] = $query_params["CISOOP1"];
-      $s = array_values($s);
-      return($s);
-    } else if((!isset($query_params["CISOPARM"])) && (isset($query_params["CISOROOT"]))){
-      Search::default_for($query_params, 'CISOBOX1', ' ');
-      Search::default_for($query_params, 'CISOFIELD1', 'CISOSEARCHALL');
-      Search::default_for($query_params, 'CISOOP1', 'any');
-      for($i = 1; $i <= 4; $i++) {
-        $idx = $i - 1;
-        if(isset($query_params["CISOBOX$i"]) && ($query_params["CISOBOX$i"] != "")){
-          $s[$idx]["field"] = $query_params["CISOFIELD$i"];
-          $s[$idx]["string"] = $query_params["CISOBOX$i"];
-          $s[$idx]["mode"] = $query_params["CISOOP$i"];
+  public function set_search_string($params) {
+    $this->search_string = array();
+    if(isset($params["CISOPARM"])){
+      $parm = explode(":",$params["CISOPARM"]);
+      $this->search_string[] = array(
+        'field' => $parm[1],
+        'string' => $parm[2],
+        'mode' => $params['CISOOP1']
+      );
+    } else {
+      Search::default_for($params, 'CISOBOX1', '');
+      Search::default_for($params, 'CISOFIELD1', 'CISOSEARCHALL');
+      Search::default_for($params, 'CISOOP1', 'any');
+      for($i = 1; $i <= 6; $i++) {
+        if(isset($params["CISOBOX$i"]) && ($params["CISOBOX$i"] != "")){
+          $this->search_string[] = array(
+            'field' => $params["CISOFIELD$i"],
+            'string' => $params["CISOBOX$i"],
+            'mode' => $params["CISOOP$i"]);
         }
       }
-      
-      $s = array_merge($s, Search::generate_content_type_search_string($query_params));
-      $s = array_values($s);
-      return($s);
+      $this->generate_content_type_search_string($params);
     }
   }
   
-  public static function generate_content_type_search_string($query_params) {
-    $search = array();
-    
-    if(isset($query_params['media-types%5B%5D'])) { $query_params['media-types'] = $query_params['media-types%5B%5D']; }
-    if(isset($query_params['media-types[]'])) { $query_params['media-types'] = $query_params['media-types[]']; }
-    
-    if(isset($query_params['media-types']) && is_array($query_params['media-types'])) {
-      $type_filter = '';
-      
-      $types = array('image' => 'image', 'audio' => 'audio', 'video' => 'video', 'docs' => 'Document');
-      foreach($types as $type => $filter) {
-        if(in_array($type,$query_params['media-types'])) {
-          $type_filter .= $filter.' ';
-        }
-      }
-
-      if(strlen($type_filter) > 0) {
-        $search[] = array(
-          'field' => 'format',
-          'string' => $type_filter,
-          'mode' => 'all'
-        );
+  public function generate_content_type_search_string() {
+    $type_filter = '';
+    $types = array('image' => 'image', 'audio' => 'audio', 'video' => 'video', 'docs' => 'Document');
+    foreach($types as $type => $filter) {
+      if(in_array($type, $this->media_types)) {
+        $type_filter .= $filter.' ';
       }
     }
-    
-    return $search;
+
+    if(strlen($type_filter) > 0) {
+      $this->search_string[] = array(
+        'field' => 'format',
+        'string' => $type_filter,
+        'mode' => 'all'
+      );
+    }
   }
 }

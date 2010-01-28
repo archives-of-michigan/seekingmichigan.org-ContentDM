@@ -36,8 +36,8 @@ class SearchFromParamsTest extends PHPUnit_Framework_TestCase {
     );
     $search = Search::from_params($params);
     
-    $this->assertEquals('/p129401coll3',$search->search_alias[0]);
     $this->assertEquals(1,count($search->search_alias));
+    $this->assertEquals('/p129401coll3',$search->search_alias[0]);
   }
   
   public function testShouldSetSortby() {
@@ -57,8 +57,8 @@ class SearchFromParamsTest extends PHPUnit_Framework_TestCase {
     $search = Search::from_params($params);
     
     $this->assertEquals(13,count($search->search_alias));
-    $this->assertEquals('Lansing mayor', $search->searchstring[0]['string']);
-    $this->assertEquals('CISOSEARCHALL', $search->searchstring[0]['field']);
-    $this->assertEquals('any', $search->searchstring[0]['mode']);
+    $this->assertEquals('Lansing mayor', $search->search_string[0]['string']);
+    $this->assertEquals('CISOSEARCHALL', $search->search_string[0]['field']);
+    $this->assertEquals('any', $search->search_string[0]['mode']);
   }
 }
