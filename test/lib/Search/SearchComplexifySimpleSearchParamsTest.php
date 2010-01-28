@@ -8,7 +8,7 @@ class SearchComplexifySimpleSearchParamsTest extends PHPUnit_Framework_TestCase 
 
     Search::complexify_simple_search_params($get);
 
-    $this->assertEquals('any', $get['CISOROOT']);
+    $this->assertEquals('all', $get['CISOROOT']);
     $this->assertEquals('CISOSEARCHALL', $get['CISOFIELD1']);
     $this->assertEquals("John's suitcase", $get['CISOBOX1']);
     $this->assertEquals('any', $get['CISOOP1']);
@@ -19,7 +19,7 @@ class SearchComplexifySimpleSearchParamsTest extends PHPUnit_Framework_TestCase 
 
     Search::complexify_simple_search_params($get);
 
-    $this->assertEquals('any', $get['CISOROOT']);
+    $this->assertEquals('all', $get['CISOROOT']);
 
     $this->assertEquals('CISOSEARCHALL', $get['CISOFIELD1']);
     $this->assertEquals("lansing", $get['CISOBOX1']);
@@ -35,7 +35,7 @@ class SearchComplexifySimpleSearchParamsTest extends PHPUnit_Framework_TestCase 
 
     Search::complexify_simple_search_params($get);
 
-    $this->assertEquals('any', $get['CISOROOT']);
+    $this->assertEquals('all', $get['CISOROOT']);
 
     $this->assertEquals('CISOSEARCHALL', $get['CISOFIELD1']);
     $this->assertEquals("computer virus vulnerability", $get['CISOBOX1']);
@@ -55,7 +55,6 @@ class SearchComplexifySimpleSearchParamsTest extends PHPUnit_Framework_TestCase 
 
     Search::complexify_simple_search_params($get);
 
-    $this->assertEquals('any', $get['CISOROOT']);
     $this->assertEquals('CISOSEARCHALL', $get['CISOFIELD1']);
     $this->assertEquals("gabba hey", $get['CISOBOX1']);
   }

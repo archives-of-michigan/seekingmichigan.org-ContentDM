@@ -59,25 +59,32 @@ class Search {
 
   public static function chunk_simple_search_string($string) {
     $chunks = array('any' => array(), 'exact' => array());
-    preg_match('/"([^"])"/', $string, $exact_matches);
+    preg_match_all('/"([^"]+)"/', $string, $exact_matches);
+    $exact_matches = array_pop($exact_matches);
 
-    foreach($exact_matches => $match) {
-      
+    foreach($exact_matches as $match) {
+      $chunks['exact'][count($chunks['exact'])] = trim($match);
     }
 
-    $string = preg_replace('/"[^"]"/', '', $string);
+    $any = preg_replace('/"[^"]*"/', '', $string);
+    $any = preg_replace('/\s+/', ' ', $any);
+    $any = trim($any);
+
+    if(strlen($any) > 0) {
+      $chunks['any'][0] = $any;
+    }
 
     return $chunks;
   }
 
   public static function complexify_simple_search_params(&$params) {
     if(isset($params['s'])) {
-      Search::default_for($params, 'CISOROOT', 'any');
+      Search::default_for($params, 'CISOROOT', 'all');
 
       $chunks = Search::chunk_simple_search_string($params['s']);
-      $counter = 0;
-      foreach(array('any','exact') => $type) {
-        foreach($chunks[$type] => $chunk) {
+      $counter = 1;
+      foreach(array('any','exact') as $type) {
+        foreach($chunks[$type] as $chunk) {
           $params["CISOFIELD$counter"] = 'CISOSEARCHALL';
           $params["CISOBOX$counter"] = $chunk;
           $params["CISOOP$counter"] = $type;

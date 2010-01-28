@@ -58,7 +58,7 @@ class SearchFromParamsTest extends PHPUnit_Framework_TestCase {
     
     $this->assertEquals(13,count($search->search_alias));
     $this->assertEquals('Lansing mayor', $search->searchstring[0]['string']);
-    $this->assertEquals($search->field, $search->searchstring[0]['field']);
+    $this->assertEquals('CISOSEARCHALL', $search->searchstring[0]['field']);
     $this->assertEquals('any', $search->searchstring[0]['mode']);
   }
 }
