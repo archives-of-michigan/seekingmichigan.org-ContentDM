@@ -8,7 +8,7 @@
       <option value="all" <? if($search->search_all): ?>selected="selected"<? endif; ?>>
         All Collections</option>
       <? foreach($collections as $collection): ?>
-        <option value="<?= $collection['alias']; ?>" <? if(in_array($collection['alias'], $search->search_alias)): ?>selected="selected"<? endif; ?>>
+        <option value="<?= $collection['alias']; ?>" <? if(!$search->search_all && in_array($collection['alias'], $search->search_alias)): ?>selected="selected"<? endif; ?>>
           <?= $collection['name']; ?></option>
       <? endforeach; ?>
     </select>
