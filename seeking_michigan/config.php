@@ -18,9 +18,9 @@ function app() {
   return $SM_APP;
 }
 
-app()->add_partial_root('cdm', real_path('./include/partials'));
+app()->add_partial_root('cdm', realpath('./include/partials'));
 app()->add_helpers(array(
-  real_path('./lib/helpers/seek_results.php')
+  realpath('./lib/helpers/seek_results.php')
 ));
 
 $isImage = array('gif','jpg','tif','tiff','jp2');
