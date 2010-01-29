@@ -96,7 +96,7 @@ include('header.php');
     <? app()->partial('search_category', 
                       array(
                         'search_fields' => app()->helper('seek_results')->search_fields_without_alias($search),
-                        'num_records_this_page' => $num_records_this_page,
+                        'num_records_this_page' => $search->total,
                         'collections' => $collections)); ?>
     <div class="paginate">
       <? include('seek/results_sub.php'); ?>
