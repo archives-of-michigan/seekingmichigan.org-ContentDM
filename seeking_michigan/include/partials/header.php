@@ -54,7 +54,7 @@ $breadcrumbs = isset($breadcrumbs) ? $breadcrumbs : array('Home' => '');
     </script>
   <? endif; ?>
 </head>
-<body id="www.seekingmichigan.com" class="<?= BODY_CLASS ?>">
+<body id="www.seekingmichigan.com" class="<?= $bodyclass ?>">
   <div class="wrapper">
     <div id="header">
       <div class="wrapper">

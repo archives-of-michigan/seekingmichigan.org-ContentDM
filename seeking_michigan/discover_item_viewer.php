@@ -93,8 +93,19 @@ $breadcrumbs = array(
   'Collections' => SEEKING_MICHIGAN_HOST.'/discover',
   $collection_name => $collection_url, 
   'Item Viewer' => '');
-define("BODY_CLASS","discover");
-include('header.php');
+
+app()->partial('header',
+               array(
+                 'breadcrumbs' => $breadcrumbs,
+                 'js_includes' => $js_includes,
+                 'css_includes' => $css_includes,
+                 'title' => $title,
+                 'bodyclass' => 'discover',
+                 'width' => $width,
+                 'height' => $height, 
+                 'image_cisoptr' => $image_cisoptr,
+                 'image_cisoroot' => $image_cisoroot
+              ));
 ?>
 <div id="section-header">
   <h1><a href="<?= SEEKING_MICHIGAN_HOST ?>/discover">Discover</a></h1>
