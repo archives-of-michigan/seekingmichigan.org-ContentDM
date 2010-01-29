@@ -1,6 +1,6 @@
 <form id="browse-search" action="seek_results.php">
   <? foreach($search_fields as $field_name => $field_value): ?>
-    <input type="hidden" name="<?= $field_name ?>" value="any" />
+    <input type="hidden" name="<?= $field_name ?>" value="<?= $field_value ?>" />
   <? endforeach; ?>
   <p>
     Browsing <strong><?= $num_records_this_page; ?></strong> items in 
