@@ -141,7 +141,7 @@ class Search {
     $aliases = ($this->search_all) ? 
       join(',',$this->search_string) :
       'all';
-    return 'CISOROOT='.$aliases.'&amp;CISOOP1=any&amp;CISOFIELD1=CISOSEARCHALL&amp;CISOBOX1='.$term;
+    return 'CISOROOT='.$aliases.'&amp;s='.$term;
   }
 
   public function form_fields($overrides = array()) {
