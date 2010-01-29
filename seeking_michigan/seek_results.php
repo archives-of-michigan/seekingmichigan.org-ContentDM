@@ -94,10 +94,7 @@ include('header.php');
     <h2>Collection Results</h2>
     <p class="intro">The results for your search are listed below.  You can narrow your search results by following the links listed for each category.</p>
     <? app()->partial('search_category', 
-                      array(
-                        'search_fields' => app()->helper('seek_results')->search_fields_without_alias($search),
-                        'num_records_this_page' => $search->total,
-                        'collections' => $collections)); ?>
+                      array('search' => $search, 'collections' => $collections)); ?>
     <div class="paginate">
       <? include('seek/results_sub.php'); ?>
     </div>

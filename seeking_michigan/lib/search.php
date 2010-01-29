@@ -13,6 +13,7 @@ class Search {
   public $total;
   public $document_types;
   public $media_types;
+  public $search_all;
 
   function __construct(
       $_search_alias = array(),
@@ -32,6 +33,7 @@ class Search {
     $this->start        = $_start;
     $this->document_types = $_document_types;
     $this->media_types = $_media_types;
+    $this->search_all = FALSE;
   }
   
   public static function from_param_string($param_string) {
@@ -48,6 +50,7 @@ class Search {
 
     $search = new Search();
     $search->search_alias = array_values(ContentDM::get_alias($params));
+    $search->search_all = ($params['CISOROOT'] == 'all') ? TRUE : FALSE;
     $search->maxrecs = 20;
     if(isset($params['document-types'])) {
       $search->set_document_types($params['document-types']);
@@ -123,7 +126,7 @@ class Search {
           1);
     return($results);
   }
-  
+
   public function terms() {
     if(count($this->search_string) > 0) {
       $terms = array();
