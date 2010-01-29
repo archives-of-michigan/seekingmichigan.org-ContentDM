@@ -13,7 +13,6 @@ define("DEF_CISOSUPPRESS", "1");
 $entries = array();
 
 $search = Search::from_params($_GET);
-$search_alias = $search->search_alias;
 $field = $search->field;
 $sortby = $search->sortby;
 $maxrecs = $search->maxrecs;
