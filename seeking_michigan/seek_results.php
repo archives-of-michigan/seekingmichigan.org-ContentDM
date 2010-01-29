@@ -1,15 +1,6 @@
 <?
 include("config.php");
 
-define("DEF_CISORESTMP", "seek_results.php");
-define("DEF_CISOVIEWTMP", "discover_item_viewer.php");
-define("DEF_CISOMODE", "grid"); //grid; title; thumb; bib; hiera
-define("DEF_CISOBIB", "title,A,1,N;subjec,A,0,N;descri,200,0,N;none,A,0,N;none,A,0,N;20;title,none,none,none,none");
-define("DEF_CISOTHUMB", "20 (4x5);title,none,none,none,none");
-define("DEF_CISOTITLE", "20;title,none,none,none,none");
-define("DEF_CISOHIERA", "20;subjec,title,none,none,none");
-define("DEF_CISOSUPPRESS", "1");
-
 $entries = array();
 
 $search = Search::from_params($_GET);
@@ -27,44 +18,6 @@ while($i<=$totalpages){
   $i++;
 }
 (count($record) > 0)?$isRes = true:$isRes = false;
-
-function getFTS($a){
-global $conf;
-  for($p=0,$i=0;$i<count($conf);$i++){
-    if($conf[$i]["nick"] == $a){
-      $p = $i;
-      break;
-    }
-  }
-  if($conf[$p]["type"] == "FTS"){
-    $fts = true;
-  } else {
-    $fts = false;
-  }
-  return $fts;
-}
-
-$wfield = '';
-$dc = '';
-if(isset($_GET["CISOPARM"])){ 
-
-  $parm = explode(":",$_GET["CISOPARM"]);
-  $dc = ((substr_count($parm[0], "/") > 0) || ($parm[0] == "all"))?1:0;
-
-  if((getFTS($parm[1])) || ($parm[1] == "CISOSEARCHALL")){
-    switch($_GET["CISOOP1"]){
-    case "exact":$wfield .= $parm[1].'<"'.trim($parm[2]).'">';break;
-    case "none":$wfield .= $parm[1].'<!'.trim($parm[2]).'>';break;
-    default:$wfield .= $parm[1].'<'.trim($parm[2]).'>';break;
-    }
-  } else {
-    $wfield = "";
-  }
-} else {
-  $dc = ((substr_count($_GET["CISOROOT"], ",") > 0) || ($_GET["CISOROOT"] == "all"))?1:0;
-}
-
-$title = 'Results : Seek &mdash; Seeking Michigan';
 
 $collections = dmGetCollectionList();
 
