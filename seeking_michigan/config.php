@@ -20,7 +20,6 @@ function app() {
 
 app()->add_partial_root('cdm', real_path('./include/partials'));
 app()->add_helpers(array(
-  real_path('./lib/helpers/prev_next_compound.php'),
   real_path('./lib/helpers/seek_results.php')
 ));
 
