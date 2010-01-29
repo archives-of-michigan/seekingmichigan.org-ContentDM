@@ -128,23 +128,20 @@ class Search {
   }
 
   public function terms() {
-    if(count($this->search_string) > 0) {
-      $terms = array();
-      
-      foreach($this->search_string as $box) {
-        if($box['field'] == 'format') { continue; }
-        
+    $terms = array();
+    foreach($this->search_string as $box) {
+      if($box['field'] != 'format') {
         $terms = array_merge($terms, explode(' ', $box['string']));
       }
-      
-      return $terms;
-    } else {
-      return array();
     }
+    return $terms;
   }
   
-  public function term_search_string($alias, $term) {
-    return 'CISOROOT='.$alias.'&amp;CISOOP1=any&amp;CISOFIELD1=CISOSEARCHALL&amp;CISOBOX1='.$term;
+  public function term_search_string($term) {
+    $aliases = ($this->search_all) ? 
+      join(',',$this->search_string) :
+      'all';
+    return 'CISOROOT='.$aliases.'&amp;CISOOP1=any&amp;CISOFIELD1=CISOSEARCHALL&amp;CISOBOX1='.$term;
   }
 
   public function form_fields($overrides = array()) {

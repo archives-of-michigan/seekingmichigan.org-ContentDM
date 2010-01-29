@@ -7,8 +7,9 @@ class SearchTermSearchStringTest extends PHPUnit_Framework_TestCase {
   }
 
   public function testShouldReturnSearchStringForTerm() {
+    $search->search_all = TRUE;
     $this->assertEquals(
-      'CISOROOT=CISOSEARCHALL&amp;CISOOP1=any&amp;CISOFIELD1=CISOSEARCHALL&amp;CISOBOX1=michigan', 
-      $this->search->term_search_string('CISOSEARCHALL','michigan'));
+      'CISOROOT=all&amp;CISOOP1=any&amp;CISOFIELD1=CISOSEARCHALL&amp;CISOBOX1=michigan', 
+      $this->search->term_search_string('michigan'));
   }
 }

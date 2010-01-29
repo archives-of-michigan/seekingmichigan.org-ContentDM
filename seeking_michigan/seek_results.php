@@ -37,7 +37,7 @@ include('header.php');
         Search Results for:
         <? foreach($search->terms() as $term): ?>
           <? $query_string = preg_replace('/CISOBOX1=[^&]*/',"CISOBOX1=$term",$_SERVER['QUERY_STRING']); ?>
-          <a href="seek_results.php?<?= $search->term_search_string($alias,$term) ?>"><?= $term; ?></a>
+          <a href="seek_results.php?<?= $search->term_search_string($term) ?>"><?= $term; ?></a>
         <? endforeach; ?>
       </h1>
     <? endif; ?>
