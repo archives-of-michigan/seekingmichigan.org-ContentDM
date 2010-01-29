@@ -127,6 +127,10 @@ class Search {
     return($results);
   }
 
+  public function is_default_search() {
+    return (count($this->search_string) == 0);
+  }
+
   public function terms() {
     $terms = array();
     foreach($this->search_string as $box) {
