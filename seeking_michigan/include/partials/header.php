@@ -43,18 +43,16 @@ $breadcrumbs = isset($breadcrumbs) ? $breadcrumbs : array('Home' => '');
   <? if(FACEBOX == 'display'): ?>
     <? include('include/facebox.php'); ?>
   <? endif; ?>
-  <? if(LIGHTBOX == 'display'): ?>
-    <? include('include/lightbox.php'); ?>
-  <? endif; ?>
-  <? if(DMMONOCLE == 'display'): ?>
+  <? if(get_class($current_item) == 'Image'): ?>
     <script type="text/javascript">
       $(window).ready(function() {
-        dmMonocle(<?=$width?>, <?=$height?>, <?=$image_cisoptr?>, "<?=$image_cisoroot?>");
+        dmMonocle(<?= $current_item->width ?>, <?= $current_item->height ?>, 
+                  <?= $current_item->itnum ?>, "<?= $current_item->alias ?>");
       });
     </script>
   <? endif; ?>
 </head>
-<body id="www.seekingmichigan.com" class="<?= $bodyclass ?>">
+<body id="www.seekingmichigan.com" class="<?= $body_class; ?>">
   <div class="wrapper">
     <div id="header">
       <div class="wrapper">

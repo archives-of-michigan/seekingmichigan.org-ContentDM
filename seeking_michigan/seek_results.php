@@ -22,14 +22,10 @@ while($i<=$totalpages){
 $collections = dmGetCollectionList();
 
 $breadcrumbs = array('Home' => SEEKING_MICHIGAN_HOST, 'Seek' => 'seek_advanced.php', 'Search Results' => '');
-app()->partial('header',
-               array(
-                 'breadcrumbs' => $breadcrumbs,
-                 'js_includes' => $js_includes,
-                 'css_includes' => $css_includes,
-                 'title' => 'Results : Seek &mdash; Seeking Michigan',
-                 'bodyclass' => 'seek'
-              ));
+app()->partial('header', 
+  array('body_class' => 'seek',
+    'breadcrumbs' => $breadcrumbs, 
+    'title' => 'Results : Seek &mdash; Seeking Michigan'));
 ?>
 <div id="section-header">
   <h1><a href="seek_advanced.php">Seek</a></h1>
@@ -62,4 +58,4 @@ app()->partial('header',
   </div>
   </div>
 </div>
-<? include('footer.php'); ?>
+<? app()->partial('footer'); ?>

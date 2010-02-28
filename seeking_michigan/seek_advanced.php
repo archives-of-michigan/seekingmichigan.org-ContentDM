@@ -6,15 +6,11 @@ function show_criterion($num) {
 include("config.php");
 
 $breadcrumbs = array('Home' => SEEKING_MICHIGAN_HOST, 'Seek' => 'seek_advanced.php', 'Advanced Search' => '');
-$js_includes = array('advanced_search');
-app()->partial('header',
-               array(
-                 'breadcrumbs' => $breadcrumbs,
-                 'js_includes' => $js_includes,
-                 'css_includes' => $css_includes,
-                 'title' => 'Advanced: Seek &mdash; Seeking Michigan',
-                 'bodyclass' => 'seek'
-              ));
+app()->partial('header', 
+  array('body_class' => 'seek',
+    'breadcrumbs' => $breadcrumbs, 
+    'js_includes' => array('advanced_search'),
+    'title' => 'Advanced: Seek &mdash; Seeking Michigan'));
 
 $collections = dmGetCollectionList();
 ?>
@@ -66,4 +62,4 @@ $collections = dmGetCollectionList();
     </div>
   </div>
 </div>
-<? include('footer.php'); ?>
+<? app()->partial('footer'); ?>

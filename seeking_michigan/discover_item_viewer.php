@@ -1,5 +1,4 @@
 <? 
-include('discover/partial.php');
 include("config.php");
 include('discover/meta_scr.php');
 
@@ -85,7 +84,6 @@ if($isthisImage){
   $printable = true;
 }
 
-$title = 'Viewer  &mdash; Seeking Michigan &mdash; '.$doctitle;
 $collection_url = SEEKING_MICHIGAN_HOST.'/discover-collection?collection='.$trimmed_alias;
 $breadcrumbs = array(
   'Home' => SEEKING_MICHIGAN_HOST,
@@ -94,18 +92,13 @@ $breadcrumbs = array(
   $collection_name => $collection_url, 
   'Item Viewer' => '');
 
-app()->partial('header',
-               array(
-                 'breadcrumbs' => $breadcrumbs,
-                 'js_includes' => $js_includes,
-                 'css_includes' => $css_includes,
-                 'title' => $title,
-                 'bodyclass' => 'discover',
-                 'width' => $width,
-                 'height' => $height, 
-                 'image_cisoptr' => $image_cisoptr,
-                 'image_cisoroot' => $image_cisoroot
-              ));
+app()->partial('header', 
+  array('body_class' => 'discover',
+    'breadcrumbs' => $breadcrumbs, 
+    'css_includes' => $css_includes,
+    'js_includes' => $js_includes,
+    'title' => 'Viewer  &mdash; Seeking Michigan &mdash; '.$current_item->title,
+    'current_item' => $current_item));
 ?>
 <div id="section-header">
   <h1><a href="<?= SEEKING_MICHIGAN_HOST ?>/discover">Discover</a></h1>
@@ -148,4 +141,4 @@ app()->partial('header',
 </div>
 <div id="main-whitebox-left"></div>
 <div id="main-whitebox-right"></div>
-<? include('footer.php'); ?>
+<? app()->partial('footer'); ?>
