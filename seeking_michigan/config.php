@@ -1,4 +1,6 @@
 <?
+error_reporting(E_ALL);
+
 if(preg_match('/haldigitalcollections/',$_SERVER['HTTP_HOST'])) {
   $redirect_string = 'http://seekingmichigan.cdmhost.com'.$_SERVER['PHP_SELF'];
   if($_SERVER['QUERY_STRING']) {
@@ -9,6 +11,10 @@ if(preg_match('/haldigitalcollections/',$_SERVER['HTTP_HOST'])) {
 }
 
 define("SEEKING_MICHIGAN_HOST","http://seekingmichigan.org");
+include('lib/item.php');
+include('lib/image.php');
+include('lib/compound_object.php');
+include('lib/item_factory.php');
 
 include('vendor/framework/lib/application.php');
 $SM_APP = new Application;
@@ -23,119 +29,24 @@ app()->add_helpers(array(
   realpath('./lib/helpers/seek_results.php')
 ));
 
-$isImage = array('gif','jpg','tif','tiff','jp2');
-$isBasicImage = array('gif','jpg');
-$isPopup = array('slideshow.php','compare.php','clip.php','clipped.php','page_text.php','side_side.php','cliparticle.php','subset.php');
-$login = false;
-$protocol = ((isset($_SERVER["HTTPS"])) && ($_SERVER["HTTPS"] == 'on'))?"https":"http";
-$url = $protocol."://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.@$_SERVER['QUERY_STRING'];
-$u = parse_url($url);
-$thisfile = ltrim(strtok(strrchr($u['path'],'/'), '?'),'/');
+$protocol = 'http';
 
-if(strpos(urldecode($url),"<") !== false){header("Location: {$protocol}://{$_SERVER['HTTP_HOST']}");}
-
-$dmdir = (isset($extPath))?"/cdm4/":($protocol.'://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'] == $protocol.'://'.$_SERVER['HTTP_HOST'].'/index.php')?"/cdm4/":"";
-$dmdiag = (dirname($_SERVER['PHP_SELF']) != 'cdm-diagnostics')?'/index.php':'#';
-
-$bchars = array('“','”','’','â€','«','»',' ');
-$gchars = array('"','"','\'','','','','&nbsp;');
-
-
-define("INCLUDE_PATH","includes/"); 
-define("DMSCRIPTS_PATH", ($dmdir == "/cdm4/")?"dmscripts/":"../dmscripts/");
 define("CLIENT_PATH", "../cdm4/client/");
 define("LANG", "en");
-define("CHARSET", "utf-8");
-define("DEF_CISOGRID", "thumbnail,A,1;title,A,1;subjec,A,0;descri,200,0;none,A,0;20;title,none,none,none,none");
 
-if(isset($_GET["CISOCUST"])){
-$ci = substr(urldecode($_GET["CISOCUST"]),1);
-} else if(isset($_GET["CISOROOT"])){
-$crt = explode(',',$_GET["CISOROOT"]);
-	if(count($crt) > 1){
-		if(file_exists(CLIENT_PATH."STY_".trim(substr($crt[0],1))."_style.php")){
-		$ci = trim(substr($crt[0],1));
-		} else {
-		$ci = "";
-		}
-	} else {
-	$ci = trim(substr($_GET["CISOROOT"],1));
-	}
-} else if(isset($_GET["CISOPARM"])){
-$parm = explode(":",urldecode($_GET["CISOPARM"]));
-$cr = explode(" ",$parm[0]);
-$ci = (count($cr) == 2)?trim(substr($cr[0],1)):"";
-} else {
-$ci = "";
-}
-$isCiso = (strpos($ci,',') > 0)?0:$ci;
+require("../dmscripts/DMSystem.php");
+require("../dmscripts/DMImage.php");
 
-if(file_exists(CLIENT_PATH."STY_".$isCiso."_style.php")){
-include(CLIENT_PATH."STY_".$isCiso."_style.php");
-$isCustom = true;
-} else {
-include(CLIENT_PATH."STY_global_style.php");
-$isCustom = false;
-}
-
-if((isset($_COOKIE['DMLANG'])) && (S_DMLANG != "")){
-$dmlang = ($_COOKIE['DMLANG'] != "")?$_COOKIE['DMLANG']:0;
-} else {
-$dmlang = (S_DMLANG != "")?substr(trim(S_DMLANG),0,2):0;
-}
-$dmlang = (file_exists("../cdm4/client/LOC_global.php"))?$dmlang:"";
-
-define("CLIENT_LOC_PATH", CLIENT_PATH.(($dmlang != "")?$dmlang."/":"")); 
-
-include(CLIENT_LOC_PATH."LOC_global.php");
-
-switch($thisfile){
-    case 'seek_results.php':
-      require(DMSCRIPTS_PATH."DMSystem.php");
-      require(DMSCRIPTS_PATH."DMImage.php");
-      break;
-    case 'seek_advanced.php':
-      require(DMSCRIPTS_PATH."DMSystem.php");
-      break;
-    case "viewer.php":
-    case "discover_doc_viewer.php":    
-    case "pdf_viewer.php": 
-    case "subset_viewer.php": 
-    case "subset.php":
-    case "subset_obj.php":       
-    case "pdftext_viewer.php":
-    case "wtf.php":
-    case "discover_item_viewer.php":
-        require(DMSCRIPTS_PATH."DMSystem.php");
-        require(DMSCRIPTS_PATH."DMImage.php");
-        break;
-    case "discover_document.php":
-    case "page_text.php":
-    case "pdf_text.php":
-    case "side_side.php":
-    case "menu_open.php":
-    case "fulltext.php":
-        require(DMSCRIPTS_PATH."DMSystem.php");
-        require(DMSCRIPTS_PATH."DMImage.php");
-        break;
-    case 'print.php':
-      require(DMSCRIPTS_PATH."DMSystem.php");
-      require(DMSCRIPTS_PATH."DMImage.php");
-    break;
-}
+$isCiso = TRUE;
 
 require_once 'lib/content_dm.php';
 require_once 'lib/search.php';
 require_once 'lib/search_status.php';
 
+
 $self = $_SERVER["PHP_SELF"];
 $querystr = (isset($_SERVER['QUERY_STRING']))?$_SERVER['QUERY_STRING']:'';
 $setrefer = $protocol.'://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$querystr;
-$refer = (isset($_COOKIE['refer']))?substr($_COOKIE['refer'],0,strpos($_COOKIE['refer'],'&QUY')):'javascript:history.back(0)';
-
-if((isset($_COOKIE["DMID"])) && ($_COOKIE["DMID"] != "")){
-$login = true;
-}
 
 $thislang = (($dmlang != substr(S_DMLANG,0,2)) && (file_exists($slash."dc_".$dmlang.".txt")))?$dmlang:"";
 
@@ -412,7 +323,8 @@ return $str;
 }
 
 function charReplace($text){
-global $bchars,$gchars;
+$bchars = array('“','”','’','â€','«','»',' ');
+$gchars = array('"','"','\'','','','','&nbsp;');
 $n = count($gchars);
     for($i=0;$i<$n;$i++){
     $text = str_replace($bchars[$i],$gchars[$i],$text);
@@ -466,113 +378,8 @@ switch(S_CUST_DIR_ALIAS_LIST){
 	break;
 }
 
-switch($dmlang){
-	case "fr":$langwidth = 30;$langtwidth = 30;break;
-	case "es":$langwidth = 32;$langtwidth = 10;break;
-	case "de":$langwidth = 0;$langtwidth = 20;break;
-	case "nl":$langwidth = 10;$langtwidth = 15;break;
-	default:$langwidth = 0;$langtwidth = 0;break;
-}
-
-function print_link($print_item) {
-  $rc = dmGetCollectionParameters($print_item['alias'], $name, $path);
-  if ($rc < 0) {
-    return "#";
-  }
-  
-  if (file_exists($path."/supp/".$print_item['ptr']."/index.pdf")) {
-    return "/cgi-bin/showfile.exe?CISOROOT=".$print_item['alias']."&amp;CISOPTR=".$print_item['ptr']."&amp;CISOMODE=print";
-  } else {
-    return "print.php?CISOROOT=".$print_item['alias']."&amp;CISOPTR=".$print_item['ptr'];
-  }
-}
-
-function get_item($alias, $itnum) {
-  $rc = dmGetItemInfo($alias, $itnum, $xmlbuffer);
-  if($rc == -1) {
-    echo "This file is restricted.";
-    exit();
-  }
-  
-  $pageptr = "CISOROOT=".$alias."&amp;CISOPTR=".$itnum;
-  
-  $parser = xml_parser_create();
-  xml_parse_into_struct($parser, $xmlbuffer, $structure, $index);
-  xml_parser_free($parser);
-  
-  $filetype = GetFileExt($structure[$index["FIND"][0]]["value"]);
-  return array(
-    'alias' => $alias, 
-    'ptr' => $itnum,
-    'structure' => $structure, 
-    'index' => $index,
-    'title' => $structure[$index["TITLE"][0]]["value"],
-    'query_string' => $pageptr,
-    'settings' => get_item_settings($alias, $itnum, $filetype),
-    'filetype' => $filetype,
-    'thumbnail' => "/cgi-bin/thumbnail.exe?CISOROOT=".$alias."&amp;CISOPTR=".$itnum
-  );
-}
-
-function get_sub_item($alias, $compound_items, $num, $itnum) {
-  $item = $compound_items[$num];
-  
-  $stitle = linkText($item["title"]);
-  
-  if($thisdoc == "PDFdoc"){
-    $pageptr = "CISOROOT=".$alias."&amp;CISOPTR=".$itnum."&amp;CISOPAGE=".$i."&amp;CISOSHOW=".$item["ptr"];
-    $ptr = $itnum;
-  } else {
-    $pageptr = "CISOROOT=".$alias."&amp;CISOPTR=".$itnum."&amp;CISOSHOW=".$item["ptr"];
-    $ptr = $item["ptr"];
-  }
-  
-  $item_data = get_item($alias, $item["ptr"]);
-  $filetype = GetFileExt($item_data["structure"][$item_data["index"]["FIND"][0]]["value"]);
-  return array(
-    'alias' => $alias, 
-    'ptr' => $ptr, 
-    'structure' => $item_data["structure"], 
-    'index' => $item_data["index"], 
-    'title' => $stitle,
-    'query_string' => $pageptr,
-    'res' => $compound_items, 
-    'settings' => get_item_settings($alias, $ptr, $filetype),
-    'filetype' => $item_data['filetype'],
-    'thumbnail' => "/cgi-bin/thumbnail.exe?CISOROOT=".$alias."&amp;CISOPTR=".$ptr
-  );
-}
-
-function get_item_settings($alias, $itnum, $filetype) {
-  global $isImage;   // arrrgh! I know!
-  
-  $isthisImage = in_array($filetype,$isImage);
-
-  if($isthisImage){
-    dmGetCollectionImageSettings($alias, $pan_enabled, $minjpegdim, $zoomlevels, $maxderivedimg, $viewer, $docviewer, $compareviewer, $slideshowviewer);
-    dmGetImageInfo($alias, $itnum, $filename, $type, $width, $height);
-
-    return array(
-      'pan_enabled' => $pan_enabled,
-      'width' => $width,
-      'height' => $height,
-      'thumbnail' => "/cgi-bin/thumbnail.exe?CISOROOT=".$alias."&amp;CISOPTR=".$itnum,
-      'full_image' => "/cgi-bin/getimage.exe?CISOROOT=".$alias."&amp;CISOPTR=".$itnum."&amp;DMWIDTH=".$width."&amp;DMHEIGHT=".$height."&amp;DMSCALE=100"
-    );
-  } else {
-    return NULL;
-  }
-}
-
-function prev_next_compound($isthisCompoundObject, $show_all, $previous_item, $next_item, $current_item_num, 
-                            $totalitems, $encoded_seek_search_params, $search_position, $alias, $parent_itnum) {
-  if($isthisCompoundObject && !$show_all) {
-    $heading = "Document Pages";
-    $previous_position = $search_position;
-    $next_position = $search_position;
-    include('discover/previous_next.php');
-  }
-}
+$langwidth = 0;
+$langtwidth = 0;
 
 function prev_next_search($seek_search_params, $search_position) {
   if(isset($seek_search_params) && $seek_search_params != '') {
@@ -590,4 +397,3 @@ function prev_next_search($seek_search_params, $search_position) {
     include('./discover/previous_next.php');
   }
 }
-?>
