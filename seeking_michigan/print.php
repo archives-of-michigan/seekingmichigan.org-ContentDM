@@ -5,13 +5,13 @@ $alias = (isset($_GET["CISOROOT"])) ? $_GET["CISOROOT"] : 0;
 $itnum = (isset($_GET["CISOPTR"])) ? $_GET["CISOPTR"] : 0;
 
 $display_item = get_item($alias, $itnum);
+$compound_object = $current_item->parent_item();
 
 if (in_array($display_item['filetype'],$isImage)) {
   $base_type = 'image';
 } else if($display_item['filetype'] == 'cpd') {
   $base_type = 'compound';
   $parent_itnum = $display_item['ptr'];
-  include("discover/comp_obj_scr.php");
 } else if($display_item['filetype'] == 'pdf') {
   $base_type = 'pdf';
 } else {
