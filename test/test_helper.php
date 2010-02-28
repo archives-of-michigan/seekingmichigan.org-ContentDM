@@ -74,4 +74,56 @@ function dmGetCollectionList() {
 function dmQuery() {
   return array();
 }
-?>
+
+function dmGetItemInfo($alias, $itnum, &$buf) {
+  $buf = <<<XML
+<xml>
+  <title>Adrian (Mich.)</title>
+  <subjec>Adrian High School (Adrian, Mich.); schools</subjec>
+  <descri>High School Building in Adrian (Mich.); c. 1920.</descri>
+  <creato></creato>
+  <date>c. 1920</date>
+  <format>Image</format>
+  <type>Postcard - Color</type>
+  <identi>PH.10458; Town and City Scenes-Adrian-PF.2104</identi>
+  <negati>21568</negati>
+  <source>Part of the Souvenir Folder of Adrian (Mich.)</source>
+  <rights>Use of this image requires the permission of the Archives of Michigan</rights>
+  <order>To order please email archives@mi.gov</order>
+  <featur></featur>
+  <locati></locati>
+  <oclc></oclc>
+  <answer></answer>
+  <ead></ead>
+  <fullrs></fullrs>
+  <find>1608.jp2</find>
+  <dmaccess></dmaccess>
+  <dmimage></dmimage>
+  <dmcreated>2009-08-28</dmcreated>
+  <dmmodified>2009-08-28</dmmodified>
+  <dmoclcno></dmoclcno>
+  <dmrecord>1607</dmrecord>
+</xml>
+XML;
+}
+
+function dmGetCompoundObjectInfo($alias, $itnum, &$buf) {
+  $buf = <<<XML
+<cpd>
+  <page>
+    <pageptr>1609</pageptr>
+  </page>
+  <page>
+    <pageptr>1610</pageptr>
+  </page>
+</cpd>
+XML;
+}
+
+function GetParent($alias, $itnum, $path) {
+  return '1607';
+}
+
+function dmGetCollectionParameters($alias, $collection_name, &$collection_path) {
+  $collection_path = "D:/foo/bar";
+}
