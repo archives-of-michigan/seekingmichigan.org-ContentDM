@@ -21,7 +21,6 @@ if(isset($_GET['search'])) {
 $search_position = isset($_GET['search_position']) ? $_GET['search_position'] : 0;
 
 if(get_class($current_item) == 'Image') {
-  include("discover/pan_scr.php");
   $js_includes = array('jquery-ui-1.7.1.custom.min', 'jquery.event.drag-1.5.min', 'dmmonocle.min');
   $css_includes = array('dmmonocle','smoothness/jquery-ui-1.7.custom');
 }
