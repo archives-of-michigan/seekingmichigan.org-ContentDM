@@ -1,6 +1,8 @@
 <?php
 
 class Image extends Item {
+  public $_settings;
+
   public static function from_xml($alias, $itnum, $xmlbuffer, $parent = NULL) {
     $xml = new SimpleXMLElement($xmlbuffer);
     $doc = ItemFactory::node($xml, '//xml');
@@ -13,11 +15,12 @@ class Image extends Item {
 
   private function load_settings() {
     if($this->_settings == NULL) {
-      dmGetCollectionImageSettings($alias, $pan_enabled, $minjpegdim, $zoomlevels, $maxderivedimg, $viewer, $docviewer, $compareviewer, $slideshowviewer);
-      dmGetImageInfo($alias, $itnum, $filename, $type, $width, $height);
+      dmGetCollectionImageSettings($this->alias, $pan_enabled, $minjpegdim, $zoomlevels, $maxderivedimg, $viewer, $docviewer, $compareviewer, $slideshowviewer);
+      dmGetImageInfo($this->alias, $this->itnum, $this->file, $type, $width, $height);
       $this->_settings = array('pan_enabled' => $pan_enabled, 'minjpegdim' => $minjpegdim, 
         'zoomlevels' => $zoomlevels, 'maxderivedimg' => $maxderivedimg, 'viewer' => $viewer, 
-        'docviewer' => $docviewer, 'compareviewer' => $compareviewer, 'slideshowviewer' => $slideshowviewer);
+        'docviewer' => $docviewer, 'compareviewer' => $compareviewer, 'slideshowviewer' => $slideshowviewer,
+        'width' => $width, 'height' => $height);
     }
   }
 
