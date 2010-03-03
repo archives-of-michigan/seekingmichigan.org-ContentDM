@@ -8,16 +8,19 @@ class ItemFactory {
 
   public static function create_from_xml($alias, $itnum, $subitnum, $xmlbuffer) {
     $xml = new SimpleXMLElement($xmlbuffer);
-    $format = (string) ItemFactory::node($xml, '//xml')->format;
+    $xmlnode = ItemFactory::node($xml, '//xml');
+    $format = (string) $xmlnode->format;
+    $extension = Item::extension((string) $xmlnode->find);  #some items have no format
+    $is_image = array_search($extension, Item::image_extensions());
 
-    if($format == 'Document') {
+    if($format == 'Document' || $extension == 'cpd') {
       $compound_object = CompoundObject::from_xml($alias, $itnum, $xmlbuffer);
       if($subitnum != NULL) {
         return $compound_object->item_by_itnum($subitnum);
       } else {
         return $compound_object->first_item();
       }
-    } else if($format == 'Image') {
+    } else if($format == 'Image' || $is_image) {
       return Image::from_xml($alias, $itnum, $xmlbuffer);
     } else {
       return Item::from_xml($alias, $itnum, $xmlbuffer);

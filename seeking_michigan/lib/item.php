@@ -55,8 +55,15 @@ class Item {
     }
   }
 
+  public static function extension($filename) {
+    return end(explode('.',$filename));
+  }
+  public static function image_extensions() {
+    return array('gif','jpg','tif','tiff','jp2');
+  }
+
   public function file_type() {
-    return end(explode('.',$this->file));
+    return Item::extension($this->file);
   }
 
   public function is_child() {
