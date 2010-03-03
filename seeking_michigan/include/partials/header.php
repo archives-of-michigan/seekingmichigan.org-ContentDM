@@ -46,7 +46,7 @@ $breadcrumbs = isset($breadcrumbs) ? $breadcrumbs : array('Home' => '');
   <? if(get_class($current_item) == 'Image'): ?>
     <script type="text/javascript">
       $(window).ready(function() {
-        dmMonocle(<?= $current_item->width ?>, <?= $current_item->height ?>, 
+        dmMonocle(<?= $current_item->width() ?>, <?= $current_item->height() ?>, 
                   <?= $current_item->itnum ?>, "<?= $current_item->alias ?>");
       });
     </script>
