@@ -74,27 +74,27 @@ class ItemTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals('CISOROOT=abc123&amp;CISOPTR=3333', $this->item->query_string());
   }
 
-  #is_printable
-  public function testIsPrintableShouldReturnTrueIfParentIsPrintable() {
-    $co = new CompoundObject('zzzz', '4444');
-    $co->file = "foobar.pdf";
-    $this->item->set_parent_item($co);
-    $this->assertTrue($this->item->is_printable());
-  }
-  public function testIsPrintableShouldReturnFalseIfParentIsNotPrintable() {
-    $co = new CompoundObject('zzzz', '4444');
-    $co->file = "foobar.dat";
-    $this->item->set_parent_item($co);
-    $this->assertFalse($this->item->is_printable());
-  }
-  public function testIsPrintableShouldReturnTrueIfPDF() {
-    $this->item->file = "foobar.pdf";
-    $this->assertTrue($this->item->is_printable());
-  }
-  public function testIsPrintableShouldReturnFalse() {
-    $this->item->file = "foobar.xml";
-    $this->assertFalse($this->item->is_printable());
-  }
+# #is_printable
+# public function testIsPrintableShouldReturnTrueIfParentIsPrintable() {
+#   $co = new CompoundObject('zzzz', '4444');
+#   $co->file = "foobar.pdf";
+#   $this->item->set_parent_item($co);
+#   $this->assertTrue($this->item->is_printable());
+# }
+# public function testIsPrintableShouldReturnFalseIfParentIsNotPrintable() {
+#   $co = new CompoundObject('zzzz', '4444');
+#   $co->file = "foobar.dat";
+#   $this->item->set_parent_item($co);
+#   $this->assertFalse($this->item->is_printable());
+# }
+# public function testIsPrintableShouldReturnTrueIfPDF() {
+#   $this->item->file = "foobar.pdf";
+#   $this->assertTrue($this->item->is_printable());
+# }
+# public function testIsPrintableShouldReturnFalse() {
+#   $this->item->file = "foobar.xml";
+#   $this->assertFalse($this->item->is_printable());
+# }
 
   #print_link
   public function testPrintLinkShouldReturnPDFLink() {
