@@ -1,10 +1,18 @@
 <?
-$increase = S_RESULTS_MENU_LENGTH;
-$currentpage = ceil($start[1] / $maxrecs);
-$disp = array_slice($entries, $start[0], $increase);
-$end = $start[0] + $increase;
+$totalpages = ceil($search->total / $search->maxrecs);
+$entries = array();
+$i=0;
+while($i<=$totalpages){
+  $entries[]=$i;
+  $i++;
+}
+
+$increase = 5;
+$currentpage = ceil($search->start[1] / $search->maxrecs);
+$disp = array_slice($entries, $search->start[0], $increase);
+$end = $search->start[0] + $increase;
 ?>
-<? if($isRes && $_GET['show_all'] != 'true'): ?>
+<? if($isRes && $show_all != 'true'): ?>
 <ul>
   <li class="previous">
     <? if($currentpage == 1): ?>
