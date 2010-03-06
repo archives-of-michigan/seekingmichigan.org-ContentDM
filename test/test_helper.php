@@ -127,3 +127,13 @@ function GetParent($alias, $itnum, $path) {
 function dmGetCollectionParameters($alias, $collection_name, &$collection_path) {
   $collection_path = "D:/foo/bar";
 }
+
+function dmGetCollectionImageSettings($alias, &$pan_enabled, &$minjpegdim, &$zoomlevels, 
+  &$maxderivedimg, &$viewer, &$docviewer, &$compareviewer, &$slideshowviewer) {
+  
+}
+
+function dmGetImageInfo($alias, $itnum, &$file, &$type, &$width, &$height) {
+  $height = 480;
+  $width = 640;
+}
