@@ -12,7 +12,7 @@ $currentpage = ceil($search->start[1] / $search->maxrecs);
 $disp = array_slice($entries, $search->start[0], $increase);
 $end = $search->start[0] + $increase;
 ?>
-<? if($isRes && $show_all != 'true'): ?>
+<? if($show_all != 'true'): ?>
 <ul>
   <li class="previous">
     <? if($currentpage == 1): ?>
