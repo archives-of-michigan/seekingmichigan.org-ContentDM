@@ -41,6 +41,14 @@ class Image extends Item {
     return TRUE;
   }
 
+  public function is_portrait() {
+    if($this->height() > $this->width()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   public function full_image_path() {
     $str = "/cgi-bin/getimage.exe?CISOROOT=".$this->alias;
     $str = $str."&amp;CISOPTR=".$this->itnum;

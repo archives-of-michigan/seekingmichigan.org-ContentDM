@@ -47,6 +47,11 @@ class ImageTest extends PHPUnit_Framework_TestCase {
       $this->image->full_image_path());
   }
 
+  #is_portrait
+  public function testIsPortrait() {
+    $this->assertEquals(FALSE, $this->image->is_portrait());
+  }
+
 
   #from_xml
   public function testShouldLoadXml() {
