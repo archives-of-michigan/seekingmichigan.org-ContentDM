@@ -124,7 +124,11 @@ class Search {
           $this->start[1],
           $this->total,
           1);
-    return($results);
+    $list = array();
+    foreach($results as $result) {
+      $list[] = Item::from_search($result);
+    }
+    return($list);
   }
 
   public function is_default_search() {
