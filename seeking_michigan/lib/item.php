@@ -6,6 +6,12 @@ class Item {
   public $index;
   public $title;
   public $file;
+  public $description;
+  public $subject;
+  public $creator;
+  public $type;
+  public $date;
+  public $format;
 
   private $_parent = NULL;
   private $_collection_path = NULL;
@@ -20,7 +26,7 @@ class Item {
   }
 
   public function parent_item() {
-    if($this->_parent == NULL) {
+    if($this->_parent === NULL) {
       $parent_itnum = GetParent($this->alias, $requested_itnum, $this->collection_path);
       if($parent_itnum != -1) {
         $this->_parent = new CompoundObject($this->alias, $parent_itnum);
@@ -31,6 +37,23 @@ class Item {
 
   public function set_parent_item($parent) {
     $this->_parent = $parent;
+  }
+
+  public function parent_itnum() {
+    var_dump($this->parent_item());
+    if($this->is_child()) {
+      return $this->parent_item()->itnum;
+    } else {
+      return NULL;
+    }
+  }
+
+  public function alt_tile() {
+    $text = $this->title;
+    if(strlen($text) > 100){
+      $text = truncate($text,100);
+    }
+    return str_replace("<br />","\n", str_replace("'","&#39;",str_replace("\"","&#34;",charReplace($text))));
   }
 
   public function collection_path() {
@@ -48,8 +71,7 @@ class Item {
   public function query_string() {
     if($this->is_child()) {
       $parent_alias = $this->parent_item()->alias;
-      $parent_itnum = $this->parent_item()->itnum;
-      return "CISOROOT=".$parent_alias."&amp;CISOPTR=".$parent_itnum."&amp;CISOSHOW=".$this->itnum;
+      return "CISOROOT=".$parent_alias."&amp;CISOPTR=".$this->parent_itnum()."&amp;CISOSHOW=".$this->itnum;
     } else {
       return "CISOROOT=".$this->alias."&amp;CISOPTR=".$this->itnum;
     }
@@ -101,6 +123,23 @@ class Item {
     }
   }
 
+  public function view_link($search_url = NULL, $search_position = NULL) {
+    $path = '';
+    if($this->is_child()) {
+      $parent_itnum = $this->parent_itnum();
+      $path = "discover_item_viewer.php?CISOROOT=$this->alias&amp;CISOPTR=$parent_itnum&amp;CISOSHOW=$this->itnum";
+    } else {
+      $path = "discover_item_viewer.php?CISOROOT=$this->alias&amp;CISOPTR=$this->itnum";
+    }
+
+    if($search_url) {
+      $search_url = urlencode($search_url);
+      $path = "$path&amp;search=$search_url&amp;search_position=$search_position";
+    }
+
+    return $path;
+  }
+
   public function download_link() {
     return "/cgi-bin/showfile.exe?CISOROOT=$this->alias&amp;CISOPTR=$this->itnum";
   }
@@ -111,6 +150,25 @@ class Item {
     $item = new Item($alias, $itnum, $parent);
     $item->title = (string) $doc->title;
     $item->file = (string) $doc->find;
+    $item->description = (string) $doc->descri;
+    $item->subject = (string) $doc->subjec;
+    $item->creator = (string) $doc->creato;
+    $item->type = (string) $doc->type;
+    $item->date = (string) $doc->date;
+    $item->format = (string) $doc->format;
+
+    return $item;
+  }
+
+  public static function from_search($result) {
+    $item = new Item($record['collection'], $record["pointer"]);
+    $item->title = $result['title'];
+    $item->subject = $result['subjec'];
+    $item->description = $result['descri'];
+    $item->creator = $result['creato'];
+    $item->date = $result['date'];
+    $item->format = $result['type'];
+    $item->format = $result['format'];
 
     return $item;
   }

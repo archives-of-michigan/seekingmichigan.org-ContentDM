@@ -132,4 +132,22 @@ class ItemTest extends PHPUnit_Framework_TestCase {
     $item = Item::from_xml('p123456', '1607', $this->xmlbuffer, 'something crazy');
     $this->assertEquals('something crazy', $item->parent_item());
   }
+
+  #view_link
+  public function testViewLinkForCompoundItem() {
+    $this->assertEquals(
+      "discover_item_viewer.php?CISOROOT=abc123&amp;CISOPTR=1607&amp;CISOSHOW=3333",
+      $this->item->view_link());
+  }
+  public function testViewLinkForSingleItem() {
+    $this->item->set_parent_item(FALSE);
+    $this->assertEquals(
+      "discover_item_viewer.php?CISOROOT=abc123&amp;CISOPTR=3333",
+      $this->item->view_link());
+  }
+  public function testViewLinkWithSearch() {
+    $this->assertEquals(
+      "discover_item_viewer.php?CISOROOT=abc123&amp;CISOPTR=1607&amp;CISOSHOW=3333&amp;search=search_params&amp;search_position=3",
+      $this->item->view_link('search_params', 3));
+  }
 }
