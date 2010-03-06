@@ -95,10 +95,14 @@ class Item {
 
   public function print_link() {
     if ($this->is_pdf()) {
-      return "/cgi-bin/showfile.exe?CISOROOT=".$this->alias."&amp;CISOPTR=".$this->itnum."&amp;CISOMODE=print";
+      return "/cgi-bin/showpdf.exe?CISOROOT=$this->alias&CISOPTR=$this->itnum";
     } else {
-      return "print.php?CISOROOT=".$this->alias."&amp;CISOPTR=".$this->itnum;
+      return "print.php?CISOROOT=$this->alias&amp;CISOPTR=$this->itnum";
     }
+  }
+
+  public function download_link() {
+    return "/cgi-bin/showfile.exe?CISOROOT=$this->alias&amp;CISOPTR=$this->itnum";
   }
 
   public static function from_xml($alias, $itnum, $xmlbuffer, $parent = NULL) {
