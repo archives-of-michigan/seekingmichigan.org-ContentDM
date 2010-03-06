@@ -1,25 +1,10 @@
 <?
 include("config.php");
 
-$entries = array();
-
 $search = Search::from_params($_GET);
-$field = $search->field;
-$sortby = $search->sortby;
-$maxrecs = $search->maxrecs;
-$start = $search->start;
-
-$record = $search->results();
-
-$totalpages = ceil($search->total / $maxrecs);
-$i=0;
-while($i<=$totalpages){
-  $entries[]=$i;
-  $i++;
-}
-(count($record) > 0)?$isRes = true:$isRes = false;
-
 $collections = dmGetCollectionList();
+$results = $search->results();
+$search_url = $_SERVER['QUERY_STRING'];
 
 $breadcrumbs = array('Home' => SEEKING_MICHIGAN_HOST, 'Seek' => 'seek_advanced.php', 'Search Results' => '');
 app()->partial('header', 
@@ -43,17 +28,52 @@ app()->partial('header',
     <? endif; ?>
     <div class="search-results">
       <div class="wrapper">
-    <h2>Collection Results</h2>
-    <p class="intro">The results for your search are listed below.  You can narrow your search results by following the links listed for each category.</p>
-    <? app()->partial('search_category', 
-                      array('search' => $search, 'collections' => $collections)); ?>
-    <div class="paginate">
-      <? include('seek/results_sub.php'); ?>
-    </div>
-    <? include('seek/results_view.php'); ?>
-    <div class="paginate">
-      <? include('seek/results_sub.php'); ?>
-    </div>
+        <h2>Collection Results</h2>
+        <p class="intro">The results for your search are listed below.  You can narrow your search results by following the links listed for each category.</p>
+        <? app()->partial('search_category', 
+                          array('search' => $search, 'collections' => $collections)); ?>
+        <div class="paginate">
+          <? if($count($results) > 0): ?>
+            <ol class="search-results mod" start="<?= $search->start[1]; ?>">
+              <? $counter = 0; ?>
+              <? foreach($results as $item): ?>
+                <? $item_num = $search->start[1] + $r; ?>
+                <li>
+                  <? if($item->alias == '/p129401coll7'): ?>
+                    <h3>
+                      <a href="<?= $item->view_link($search_url, $item_num); ?>" title="<?= $item->alt_title(); ?>">
+                        <img src="<?= $item->thumbnail_path(); ?>" alt="<?= $item->alt_title(); ?>" title="<?= $item->alt_title(); ?>" />
+                        <?= $item->description;  #first name ?>
+                        <?= $item->creator;  #last name ?>
+                      </a>
+                    </h3>
+                    <p class="byline"><?= $item->type; ?> <?= $item->date; ?>, <?= $item->format; ?></p>
+                    <p>
+                      <? if($item->subject): ?><?= $item->subject;  #city/village/township ?>, <? endif; ?>
+                      <? if($item->title): ?><?= $item->title;  #county ?> County<? endif; ?>
+                    </p>
+                  <? else: ?>
+                    <h3>
+                      <a href="<?= $item->view_link($search_url, $item_num); ?>" title="<?= $item->alt_title(); ?>">
+                        <img src="<?= $item->thumbnail_path(); ?>" alt="<?= $item->alt_title(); ?>" title="<?= $item->alt_title(); ?>" />
+                        <?= $item->title; ?>
+                      </a>
+                    </h3>
+                    <p class="byline"><?= $item->subject; ?></p>
+                    <p><?= $item->description; ?></p>
+                  <? endif; ?>
+                </li>
+                <? $counter += 1; ?>
+              <? endfor; ?>
+            </ol>
+          <? else: ?>
+            No Items matched your criteria
+          <? endif; ?>
+        </div>
+        <div class="paginate">
+          <? app()->partial('seek_pagination', 
+                      array('search' => $search, 'isRes' => $isRes, 'show_all' => $_GET['show_all'])); ?>
+        </div>
     </div>
   </div>
   </div>
