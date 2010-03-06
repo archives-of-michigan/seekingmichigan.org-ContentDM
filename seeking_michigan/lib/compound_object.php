@@ -50,6 +50,20 @@ class CompoundObject extends Item {
     $this->items[] = $item;
   }
 
+  public function is_overall_layout_portrait() {
+    $max_width = 0;
+    $max_height = 0;
+    foreach($this->items() as $item) {
+      $max_width = max($max_width, $item->width());
+      $max_height = max($max_height, $item->height());
+    }
+    if($max_height > $max_width) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   public static function from_xml($alias, $itnum, $xmlbuffer) {
     $xml = new SimpleXMLElement($xmlbuffer);
     $doc = ItemFactory::node($xml, '//xml');
