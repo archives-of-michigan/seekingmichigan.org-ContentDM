@@ -19,22 +19,22 @@ $end = $search->start[0] + $increase;
       Previous
     <? else: ?>
       <?
-        if($currentpage == $start[0]){
-          $prev_url = $self.'?'.htmlentities(stripUrlVar($querystr, 'CISOSTART')).'&amp;CISOSTART='.($start[0] - $increase).','.($start[1]-($maxrecs));
+        if($currentpage == $search->start[0]){
+          $prev_url = $self.'?'.htmlentities(stripUrlVar($querystr, 'CISOSTART')).'&amp;CISOSTART='.($search->start[0] - $increase).','.($search->start[1]-($search->maxrecs));
         } else {  
-          $prev_url = $self.'?'.htmlentities(stripUrlVar($querystr, 'CISOSTART')).'&amp;CISOSTART='.$start[0].','.($start[1]-($maxrecs));
+          $prev_url = $self.'?'.htmlentities(stripUrlVar($querystr, 'CISOSTART')).'&amp;CISOSTART='.$search->start[0].','.($search->start[1]-($search->maxrecs));
         }
       ?>
       <a href="<?= $prev_url ?>">Previous</a>
     <? endif; ?>
   </li>
   <? foreach ($disp as $d): ?>
-    <? $page = (($d*$maxrecs)-($maxrecs-1)); ?>
+    <? $page = (($d*$search->maxrecs)-($search->maxrecs-1)); ?>
     <li>
-      <? if($start[1] == $page): ?>
+      <? if($search->start[1] == $page): ?>
         <?= $d ?>
       <? else: ?>
-        <a href="<?= $self ?>?<?= htmlentities(stripUrlVar($querystr, 'CISOSTART')) ?>&amp;CISOSTART=<?= $start[0] ?>,<?= $page ?>"><?= $d ?></a>
+        <a href="<?= $self ?>?<?= htmlentities(stripUrlVar($querystr, 'CISOSTART')) ?>&amp;CISOSTART=<?= $search->start[0] ?>,<?= $page ?>"><?= $d ?></a>
       <? endif; ?>
     </li>
   <? endforeach; ?>
@@ -44,9 +44,9 @@ $end = $search->start[0] + $increase;
     <? else: ?>
       <?
         if($currentpage == $d){
-          $next_url = $self.'?'.htmlentities(stripUrlVar($querystr, 'CISOSTART')).'&amp;CISOSTART='.($start[0] + $increase).','.($start[1]+($maxrecs));
+          $next_url = $self.'?'.htmlentities(stripUrlVar($querystr, 'CISOSTART')).'&amp;CISOSTART='.($search->start[0] + $increase).','.($search->start[1]+($search->maxrecs));
         } else {
-          $next_url = $self.'?'.htmlentities(stripUrlVar($querystr, 'CISOSTART')).'&amp;CISOSTART='.$start[0].','.($start[1]+($maxrecs));
+          $next_url = $self.'?'.htmlentities(stripUrlVar($querystr, 'CISOSTART')).'&amp;CISOSTART='.$search->start[0].','.($search->start[1]+($search->maxrecs));
         } 
       ?>
       <a href="<?= $next_url ?>">Next</a>
