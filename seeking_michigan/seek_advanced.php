@@ -1,8 +1,4 @@
 <?
-function show_criterion($num) {
-  include('seek/criterion.php');
-}
-
 include("config.php");
 
 $breadcrumbs = array('Home' => SEEKING_MICHIGAN_HOST, 'Seek' => 'seek_advanced.php', 'Advanced Search' => '');
@@ -31,7 +27,9 @@ $collections = dmGetCollectionList();
         </p>
         <h3>Build Your Advanced Search</h3>
         <form action="seek_results.php" class="mod">
-          <? for($i = 1; $i <= 4; $i++) { show_criterion($i); } ?>
+          <? for($i = 1; $i <= 4; $i++) { 
+            app()->partial('criterion', array('num' => $i));
+          } ?>
           <fieldset class="special mod">
             <legend>Add Collections:</legend>
             <div id="select-source" class="mod">
