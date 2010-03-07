@@ -72,7 +72,35 @@ function dmGetCollectionList() {
 }
 
 function dmQuery() {
-  return array();
+  return array(
+    array('collection' => '/p129401coll10', 
+      'pointer' => 1607,
+      'title' => 'UNIX Network programming',
+      'subjec' => 'IPC',
+      'descri' => 'IPC and Stuff',
+      'creato' => 'Stevens',
+      'date' => '2009-01-20',
+      'type' => 'Book',
+      'format' => 'Document'),
+    array('collection' => '/p129401coll10', 
+      'pointer' => 1608,
+      'title' => 'Operating System Design',
+      'subjec' => 'OS',
+      'descri' => 'The XINU Approach',
+      'creato' => 'Stevens',
+      'date' => '2009-01-20',
+      'type' => 'Book',
+      'format' => 'Document'),
+    array('collection' => '/p129401coll10', 
+      'pointer' => 1609,
+      'title' => 'Pthreads Programming',
+      'subjec' => 'Prallelism',
+      'descri' => 'Programming with pthreads',
+      'creato' => 'Stevens',
+      'date' => '2009-01-20',
+      'type' => 'Book',
+      'format' => 'Document')
+  );
 }
 
 function dmGetItemInfo($alias, $itnum, &$buf) {

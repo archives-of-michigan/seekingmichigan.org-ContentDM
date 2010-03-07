@@ -161,13 +161,13 @@ class Item {
   }
 
   public static function from_search($result) {
-    $item = new Item($record['collection'], $record["pointer"]);
+    $item = new Item($result['collection'], $result["pointer"]);
     $item->title = $result['title'];
     $item->subject = $result['subjec'];
     $item->description = $result['descri'];
     $item->creator = $result['creato'];
     $item->date = $result['date'];
-    $item->format = $result['type'];
+    $item->type = $result['type'];
     $item->format = $result['format'];
 
     return $item;
