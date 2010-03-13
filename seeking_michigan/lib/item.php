@@ -15,6 +15,47 @@ class Item {
 
   private $_parent = NULL;
   private $_collection_path = NULL;
+ 
+# public static
+ 
+  public static function from_xml($alias, $itnum, $xmlbuffer, $parent = NULL) {
+    $xml = new SimpleXMLElement($xmlbuffer);
+    $doc = ItemFactory::node($xml, '//xml');
+    $item = new Item($alias, $itnum, $parent);
+    $item->title = (string) $doc->title;
+    $item->file = (string) $doc->find;
+    $item->description = (string) $doc->descri;
+    $item->subject = (string) $doc->subjec;
+    $item->creator = (string) $doc->creato;
+    $item->type = (string) $doc->type;
+    $item->date = (string) $doc->date;
+    $item->format = (string) $doc->format;
+
+    return $item;
+  }
+
+  public static function from_search($result) {
+    $item = new Item($result['collection'], $result["pointer"]);
+    $item->title = $result['title'];
+    $item->subject = $result['subjec'];
+    $item->description = $result['descri'];
+    $item->creator = $result['creato'];
+    $item->date = $result['date'];
+    $item->type = $result['type'];
+    $item->format = $result['format'];
+
+    return $item;
+  } 
+
+  public static function extension($filename) {
+    return end(explode('.',$filename));
+  }
+  public static function image_extensions() {
+    return array('gif','jpg','tif','tiff','jp2');
+  }
+
+
+# constructors
 
   function __construct($_alias, $_itnum, $parent_compound_object = NULL) {
     $this->alias = $_alias;
@@ -25,6 +66,9 @@ class Item {
     }
   }
 
+
+# public instance
+ 
   public function parent_item() {
     if($this->_parent === NULL) {
       $parent_itnum = GetParent($this->alias, $requested_itnum, $this->collection_path);
@@ -83,13 +127,6 @@ class Item {
     } else {
       return "CISOROOT=".$this->alias."&amp;CISOPTR=".$this->itnum;
     }
-  }
-
-  public static function extension($filename) {
-    return end(explode('.',$filename));
-  }
-  public static function image_extensions() {
-    return array('gif','jpg','tif','tiff','jp2');
   }
 
   public function file_type() {
@@ -157,37 +194,8 @@ class Item {
     return "/cgi-bin/showfile.exe?CISOROOT=$this->alias&amp;CISOPTR=$this->itnum";
   }
 
-  public static function from_xml($alias, $itnum, $xmlbuffer, $parent = NULL) {
-    $xml = new SimpleXMLElement($xmlbuffer);
-    $doc = ItemFactory::node($xml, '//xml');
-    $item = new Item($alias, $itnum, $parent);
-    $item->title = (string) $doc->title;
-    $item->file = (string) $doc->find;
-    $item->description = (string) $doc->descri;
-    $item->subject = (string) $doc->subjec;
-    $item->creator = (string) $doc->creato;
-    $item->type = (string) $doc->type;
-    $item->date = (string) $doc->date;
-    $item->format = (string) $doc->format;
 
-    return $item;
-  }
-
-  public static function from_search($result) {
-    $item = new Item($result['collection'], $result["pointer"]);
-    $item->title = $result['title'];
-    $item->subject = $result['subjec'];
-    $item->description = $result['descri'];
-    $item->creator = $result['creato'];
-    $item->date = $result['date'];
-    $item->type = $result['type'];
-    $item->format = $result['format'];
-
-    return $item;
-  }
-
-
-#private
+#private instance
   
   private function stripUrlVar($u,$a){
     $p = strpos($u,"$a=");
