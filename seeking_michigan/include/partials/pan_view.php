@@ -9,7 +9,19 @@
 </div>
 <div id="sidebar">
   <? if($current_item->is_child()): ?>
-    <a id="compound_object_pages" href="/seeking_michigan/compound_object_pages.php">All items</a>
+    <a id="compound_object_pages"
+       href="/seeking_michigan/compound_object_pages.php">
+      Browse Document
+    </a>
+    <a href="<?= $current_item->parent_item()->
+                  view_link($seek_search_params); ?>">
+      Show All Items in Document
+    </a>
   <? endif; ?>
-  <? #prev_next_search($seek_search_params,$search_position); ?>
+  <? 
+     if($search_status) {
+        app()->partial('previous_next', 
+          array('search_status' => $search_status));
+     }
+  ?>
 </div>

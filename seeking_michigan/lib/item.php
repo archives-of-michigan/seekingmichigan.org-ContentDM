@@ -127,14 +127,19 @@ class Item {
     $path = '';
     if($this->is_child()) {
       $parent_itnum = $this->parent_itnum();
-      $path = "discover_item_viewer.php?CISOROOT=$this->alias&amp;CISOPTR=$parent_itnum&amp;CISOSHOW=$this->itnum";
+      $path = "discover_item_viewer.php?CISOROOT=$this->alias";
+      $path .= "&amp;CISOPTR=$parent_itnum&amp;CISOSHOW=$this->itnum";
     } else {
-      $path = "discover_item_viewer.php?CISOROOT=$this->alias&amp;CISOPTR=$this->itnum";
+      $path = "discover_item_viewer.php?CISOROOT=$this->alias";
+      $path .= "&amp;CISOPTR=$this->itnum";
     }
 
     if($search_url) {
+      $search_url = preg_replace('/&CISOSTART=\d+/','',$search_url);
+      $search_url .= "&CISOSTART=$search_position";
       $search_url = urlencode($search_url);
-      $path = "$path&amp;search=$search_url&amp;search_position=$search_position";
+
+      $path = "$path&amp;search=$search_url";
     }
 
     return $path;
@@ -171,5 +176,24 @@ class Item {
     $item->format = $result['format'];
 
     return $item;
+  }
+
+
+#private
+  
+  private function stripUrlVar($u,$a){
+    $p = strpos($u,"$a=");
+        if($p){
+            if($u[$p-1] == "&"){
+            $p--;
+            }
+        $ep = strpos($u,"&",$p+1);
+            if ($ep === false){
+            $u = substr($u,0,$p);
+            } else {
+            $u = str_replace(substr($u,$p,$ep-$p),'',$u);
+            }
+        }
+    return $u;
   }
 }
