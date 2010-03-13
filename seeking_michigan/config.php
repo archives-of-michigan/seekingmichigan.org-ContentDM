@@ -52,22 +52,6 @@ $thislang = (($dmlang != substr(S_DMLANG,0,2)) && (file_exists($slash."dc_".$dml
 
 /********************************************/
 
-function stripUrlVar($u,$a){
-$p = strpos($u,"$a=");
-    if($p){
-        if($u[$p-1] == "&"){
-        $p--;
-        }
-    $ep = strpos($u,"&",$p+1);
-        if ($ep === false){
-        $u = substr($u,0,$p);
-        } else {
-        $u = str_replace(substr($u,$p,$ep-$p),'',$u);
-        }
-    }
-return $u;
-}
-
 function formatDate($date){
 $pattern = '([a-zA-Z])';
 if(preg_match($pattern,$date)){
@@ -380,20 +364,3 @@ switch(S_CUST_DIR_ALIAS_LIST){
 
 $langwidth = 0;
 $langtwidth = 0;
-
-function prev_next_search($seek_search_params, $search_position) {
-  if(isset($seek_search_params) && $seek_search_params != '') {
-    $encoded_seek_search_params = urlencode($seek_search_params);
-    $search_status = new SearchStatus($seek_search_params, $search_position);
-  
-    $previous_item = $search_status->previous_item;
-    if($previous_item) { $previous_position = $search_position - 1; }
-    $next_item = $search_status->next_item;
-    if($next_item) { $next_position = $search_position + 1; }
-    $current_item_num = $search_position;
-  
-    $heading = "Search Results";
-    $totalitems = $search_status->total_items;
-    include('./discover/previous_next.php');
-  }
-}
