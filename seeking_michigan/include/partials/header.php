@@ -38,10 +38,10 @@ $breadcrumbs = isset($breadcrumbs) ? $breadcrumbs : array('Home' => '');
   <script type="text/javascript">
     try { _gat._getTracker("UA-7441223-3")._trackPageview(); } catch(err) {}
   </script>
-  <?php app()->partial('banner', 
-                       array('scene' => app()->helper('header')->banner_scene())); ?>
+  <? app()->partial('banner', 
+                  array('scene' => app()->helper('header')->banner_scene())); ?>
   <? if(FACEBOX == 'display'): ?>
-    <? include('include/facebox.php'); ?>
+    <? app()->partial('facebox'); ?>
   <? endif; ?>
   <? if(get_class($current_item) == 'Image'): ?>
     <script type="text/javascript">
