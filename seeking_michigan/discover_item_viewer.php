@@ -49,9 +49,9 @@ app()->partial('header',
         </h2>
         <h3>Item Viewer: <?= $current_item->title() ?></h3>
         <ul class="page-actions">
-          <? if($seek_search_params): ?>
+          <? if($search_status): ?>
             <li class="action-back">
-              <a href="seek_results.php?<?= $seek_search_params ?>">
+              <a href="<?= $search_status->all_results_link(); ?>">
                 Back to results
               </a>
             </li>

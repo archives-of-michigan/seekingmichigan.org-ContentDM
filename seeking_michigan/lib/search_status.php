@@ -42,4 +42,11 @@ class SearchStatus {
   public function next_thumbnail() {
     return $this->next_item->thumbnail_path();
   }
+
+  public function all_results_link() {
+    $search_url = preg_replace('/&CISOSTART=\d+/','&CISOSTART=1',
+                               $this->search_params);
+    $search_url = preg_replace('/&/','&amp;',$search_url);
+    return "seek_results.php?".$search_url;
+  }
 }
