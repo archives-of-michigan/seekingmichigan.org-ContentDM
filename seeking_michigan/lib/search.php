@@ -21,7 +21,7 @@ class Search {
       $_sortby = array('title'),
       $_search_string = array(),
       $_maxrecs = 1024,
-      $_start = array(1,1),
+      $_start = 1,
       $_document_types = array(),
       $_media_types = array()
     ) {
@@ -37,10 +37,11 @@ class Search {
   }
   
   public static function from_param_string($param_string) {
-    parse_str(
-      urldecode($param_string),
-      $params
-    );
+    if(!preg_match('/=/', $param_string)) {
+      $param_string = urldecode($param_string);
+    }
+    
+    parse_str($param_string, $params);
     
     return Search::from_params($params);
   }
@@ -62,8 +63,7 @@ class Search {
     }
     $search->set_search_string($params);
 
-    $start = (isset($params['CISOSTART'])) ? $params['CISOSTART'] : "1,1";
-    $search->start = split(',',$start);
+    $search->start = (isset($params['CISOSTART'])) ? $params['CISOSTART'] : '1';
 
     return($search);
   }
@@ -121,7 +121,7 @@ class Search {
           $this->field,
           $this->sortby,
           $this->maxrecs,
-          $this->start[1],
+          $this->start,
           $this->total,
           1);
     $list = array();
@@ -163,7 +163,7 @@ class Search {
       $fields["CISOFIELD$counter"] = $string['field'];
       $counter++;
     }
-    $fields['CISOSTART'] = join(',',$this->start);
+    $fields['CISOSTART'] = $this->start;
 
     return array_merge($fields, $overrides);
   }

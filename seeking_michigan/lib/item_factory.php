@@ -13,7 +13,7 @@ class ItemFactory {
     $extension = Item::extension((string) $xmlnode->find);  #some items have no format
     $is_image = array_search($extension, Item::image_extensions());
 
-    if($format == 'Document' || $extension == 'cpd') {
+    if($extension == 'cpd') {  // $format == 'Document' ||  -- inconsistent
       $compound_object = CompoundObject::from_xml($alias, $itnum, $xmlbuffer);
       if($subitnum != NULL) {
         return $compound_object->item_by_itnum($subitnum);

@@ -1,5 +1,6 @@
 <?
 include("config.php");
+include('lib/paginator.php');
 
 $search = Search::from_params($_GET);
 $collections = dmGetCollectionList();
@@ -39,60 +40,62 @@ app()->partial('header',
                           array('search' => $search, 
                           'collections' => $collections)); ?>
         <div class="paginate">
-          <? if($count($results) > 0): ?>
-            <ol class="search-results mod" start="<?= $search->start[1]; ?>">
-              <? $counter = 0; ?>
-              <? foreach($results as $item): ?>
-                <? $item_num = $search->start[1] + $r; ?>
-                <li>
-                  <? if($item->alias == '/p129401coll7'): ?>
-                    <h3>
-                      <a href="<?= $item->view_link($search_url, $item_num); ?>"
-                         title="<?= $item->alt_title(); ?>">
-                        <img src="<?= $item->thumbnail_path(); ?>"
-                             alt="<?= $item->alt_title(); ?>"
-                             title="<?= $item->alt_title(); ?>" />
-                        <?= $item->description;  #first name ?>
-                        <?= $item->creator;  #last name ?>
-                      </a>
-                    </h3>
-                    <p class="byline">
-                      <?= $item->type; ?> <?= $item->date; ?>, 
-                      <?= $item->format; ?></p>
-                    <p>
-                      <? if($item->subject): ?>
-                        <?= $item->subject;  #city/village/township ?>,
-                      <? endif; ?>
-                      <? if($item->title): ?>
-                        <?= $item->title;  #county ?> County
-                      <? endif; ?>
-                    </p>
-                  <? else: ?>
-                    <h3>
-                      <a href="<?= $item->view_link($search_url, $item_num); ?>"
-                         title="<?= $item->alt_title(); ?>">
-                        <img src="<?= $item->thumbnail_path(); ?>"
-                             alt="<?= $item->alt_title(); ?>"
-                             title="<?= $item->alt_title(); ?>" />
-                        <?= $item->title; ?>
-                      </a>
-                    </h3>
-                    <p class="byline"><?= $item->subject; ?></p>
-                    <p><?= $item->description; ?></p>
-                  <? endif; ?>
-                </li>
-                <? $counter += 1; ?>
-              <? endfor; ?>
-            </ol>
-          <? else: ?>
-            No Items matched your criteria
-          <? endif; ?>
-        </div>
-        <div class="paginate">
           <? app()->partial('seek_pagination', 
-                            array('search' => $search,
-                              'show_all' => $_GET['show_all'])); ?>
+                            array('search' => $search)); ?>
         </div>
+        <? if(count($results) > 0): ?>
+          <ol class="search-results mod" start="<?= $search->start; ?>">
+            <? $counter = 0; ?>
+            <? foreach($results as $item): ?>
+              <? $item_num = $search->start + $counter; ?>
+              <li>
+                <? if($item->alias == '/p129401coll7'): ?>
+                  <h3>
+                    <a href="<?= $item->view_link($search_url, $item_num); ?>"
+                       title="<?= $item->alt_title(); ?>">
+                      <img src="<?= $item->thumbnail_path(); ?>"
+                           alt="<?= $item->alt_title(); ?>"
+                           title="<?= $item->alt_title(); ?>" />
+                      <?= $item->description;  #first name ?>
+                      <?= $item->creator;  #last name ?>
+                    </a>
+                  </h3>
+                  <p class="byline">
+                    <?= $item->type; ?> <?= $item->date; ?>, 
+                    <?= $item->format; ?></p>
+                  <p>
+                    <? if($item->subject): ?>
+                      <?= $item->subject;  #city/village/township ?>,
+                    <? endif; ?>
+                    <? if($item->title): ?>
+                      <?= $item->title;  #county ?> County
+                    <? endif; ?>
+                  </p>
+                <? else: ?>
+                  <h3>
+                    <a href="<?= $item->view_link($search_url, $item_num); ?>"
+                       title="<?= $item->alt_title(); ?>">
+                      <img src="<?= $item->thumbnail_path(); ?>"
+                           alt="<?= $item->alt_title(); ?>"
+                           title="<?= $item->alt_title(); ?>" />
+                      <?= $item->title(); ?>
+                    </a>
+                  </h3>
+                  <p class="byline"><?= $item->subject; ?></p>
+                  <p><?= $item->description; ?></p>
+                <? endif; ?>
+              </li>
+              <? $counter += 1; ?>
+            <? endforeach; ?>
+          </ol>
+        <? else: ?>
+          No Items matched your criteria
+        <? endif; ?>
+      </div>
+      <div class="paginate">
+         <? app()->partial('seek_pagination', 
+                           array('search' => $search)); ?>
+      </div>
     </div>
   </div>
   </div>

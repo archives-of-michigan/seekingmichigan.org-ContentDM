@@ -40,7 +40,6 @@ class Item {
   }
 
   public function parent_itnum() {
-    var_dump($this->parent_item());
     if($this->is_child()) {
       return $this->parent_item()->itnum;
     } else {
@@ -48,7 +47,16 @@ class Item {
     }
   }
 
-  public function alt_tile() {
+  public function title() {
+    if($this->is_child()) {
+      $title = $this->parent_item()->title();
+      return $title.' &mdash; '.$this->title;
+    } else {
+      return $this->title;
+    }
+  }
+
+  public function alt_title() {
     $text = $this->title;
     if(strlen($text) > 100){
       $text = truncate($text,100);

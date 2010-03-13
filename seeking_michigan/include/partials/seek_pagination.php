@@ -1,55 +1,27 @@
-<?
-$totalpages = ceil($search->total / $search->maxrecs);
-$entries = array();
-$i=0;
-while($i<=$totalpages){
-  $entries[]=$i;
-  $i++;
-}
-
-$increase = 5;
-$currentpage = ceil($search->start[1] / $search->maxrecs);
-$disp = array_slice($entries, $search->start[0], $increase);
-$end = $search->start[0] + $increase;
-?>
-<? if($show_all != 'true'): ?>
+<? $paginator = new Paginator($_SERVER['QUERY_STRING'], $search); ?>
+<? if($_GET['show_all'] != 'true'): ?>
 <ul>
   <li class="previous">
-    <? if($currentpage == 1): ?>
+    <? if($paginator->is_first_page()): ?>
       Previous
     <? else: ?>
-      <?
-        if($currentpage == $search->start[0]){
-          $prev_url = $self.'?'.htmlentities(stripUrlVar($querystr, 'CISOSTART')).'&amp;CISOSTART='.($search->start[0] - $increase).','.($search->start[1]-($search->maxrecs));
-        } else {  
-          $prev_url = $self.'?'.htmlentities(stripUrlVar($querystr, 'CISOSTART')).'&amp;CISOSTART='.$search->start[0].','.($search->start[1]-($search->maxrecs));
-        }
-      ?>
-      <a href="<?= $prev_url ?>">Previous</a>
+      <a href="<?= $paginator->previous_link(); ?>">Previous</a>
     <? endif; ?>
   </li>
-  <? foreach ($disp as $d): ?>
-    <? $page = (($d*$search->maxrecs)-($search->maxrecs-1)); ?>
+  <? foreach($paginator->pages() as $page_num => $page_base_count): ?>
     <li>
-      <? if($search->start[1] == $page): ?>
-        <?= $d ?>
+      <? if($paginator->current_page() == $page_num): ?>
+        <?= $page_num ?>
       <? else: ?>
-        <a href="<?= $self ?>?<?= htmlentities(stripUrlVar($querystr, 'CISOSTART')) ?>&amp;CISOSTART=<?= $search->start[0] ?>,<?= $page ?>"><?= $d ?></a>
+        <a href="<?= $paginator->page_link($page_base_count); ?>"><?=trim($page_num);?></a>
       <? endif; ?>
     </li>
   <? endforeach; ?>
   <li class="next">
-    <? if($currentpage == $totalpages): ?>
+    <? if($paginator->is_last_page()): ?>
       Next
     <? else: ?>
-      <?
-        if($currentpage == $d){
-          $next_url = $self.'?'.htmlentities(stripUrlVar($querystr, 'CISOSTART')).'&amp;CISOSTART='.($search->start[0] + $increase).','.($search->start[1]+($search->maxrecs));
-        } else {
-          $next_url = $self.'?'.htmlentities(stripUrlVar($querystr, 'CISOSTART')).'&amp;CISOSTART='.$search->start[0].','.($search->start[1]+($search->maxrecs));
-        } 
-      ?>
-      <a href="<?= $next_url ?>">Next</a>
+      <a href="<?= $paginator->next_link(); ?>">Next</a>
     <? endif; ?>
   </li>
 </ul>
