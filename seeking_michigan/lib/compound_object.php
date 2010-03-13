@@ -46,7 +46,7 @@ class CompoundObject extends Item {
   }
 
   public function add_item($item) {
-    $item->set_parent_item($compound_object);
+    $item->set_parent_item($this);
     $this->items[] = $item;
   }
 
