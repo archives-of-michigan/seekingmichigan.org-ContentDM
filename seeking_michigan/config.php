@@ -11,10 +11,6 @@ if(preg_match('/haldigitalcollections/',$_SERVER['HTTP_HOST'])) {
 }
 
 define("SEEKING_MICHIGAN_HOST","http://seekingmichigan.org");
-include('lib/item.php');
-include('lib/image.php');
-include('lib/compound_object.php');
-include('lib/item_factory.php');
 
 include('vendor/framework/lib/application.php');
 $SM_APP = new Application;
@@ -37,21 +33,10 @@ define("LANG", "en");
 require("../dmscripts/DMSystem.php");
 require("../dmscripts/DMImage.php");
 
-$isCiso = TRUE;
-
+require_once 'lib/item.php';
+require_once 'lib/image.php';
+require_once 'lib/compound_object.php';
+require_once 'lib/item_factory.php';
 require_once 'lib/content_dm.php';
 require_once 'lib/search.php';
 require_once 'lib/search_status.php';
-
-
-$self = $_SERVER["PHP_SELF"];
-$querystr = (isset($_SERVER['QUERY_STRING']))?$_SERVER['QUERY_STRING']:'';
-$setrefer = $protocol.'://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$querystr;
-
-$thislang = (($dmlang != substr(S_DMLANG,0,2)) && (file_exists($slash."dc_".$dmlang.".txt")))?$dmlang:"";
-
-/********************************************/
-
-
-$langwidth = 0;
-$langtwidth = 0;
