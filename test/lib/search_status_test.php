@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__FILE__).'/../../seeking_michigan/lib/search_status.php';
  
-class SearchStatus extends PHPUnit_Framework_TestCase {
+class SearchStatusTest extends PHPUnit_Framework_TestCase {
 
   #initialize
   public function testShouldHaveEmptyPreviousAndNextItems() {
