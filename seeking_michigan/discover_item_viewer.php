@@ -82,19 +82,37 @@ app()->partial('header',
     <? if($show_all) {
       foreach($current_item->parent_item()->items() as $subitem) {
         app()->partial('basic_view', 
-          array(
-            'current_item' => $subitem, 
-            'search_status' => $search_status));
+          array('current_item' => $subitem, 
+                'search_status' => $search_status,
+                'show_all' => $show_all));
       }
     } else if(get_class($current_item) == 'Image'){
       app()->partial('pan_view', array('current_item' => $current_item,
                                        'search_status' => $search_status));
     } else {
         app()->partial('basic_view', 
-          array(
-            'current_item' => $current_item, 
-            'search_status' => $search_status));
+          array('current_item' => $current_item, 
+                'search_status' => $search_status,
+                'show_all' => $show_all));
     } ?>
+    <div id="sidebar">
+      <? if($current_item->is_child()): ?>
+        <a id="compound_object_pages"
+           href="/seeking_michigan/compound_object_pages.php">
+          Browse Document
+        </a>
+        <a href="<?= $current_item->parent_item()->
+                      view_link($seek_search_params); ?>">
+          Show All Items in Document
+        </a>
+      <? endif; ?>
+      <? 
+         if($search_status) {
+            app()->partial('previous_next', 
+              array('search_status' => $search_status));
+         }
+      ?>
+    </div>
   </div>
 </div>
 <div id="main-whitebox-left"></div>
