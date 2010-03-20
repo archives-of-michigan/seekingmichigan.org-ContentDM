@@ -1,7 +1,7 @@
 <? 
 include("config.php");
-include('discover/meta_scr.php');
 
+$collection = Collection::from_alias($_GET['CISOROOT']);
 $current_item = ItemFactory::create($_GET['CISOROOT'], $_GET['CISOPTR'],
                                     $_GET['CISOSHOW']);
 $show_all = (isset($_GET["show_all"])) ? $_GET["show_all"] : false;
@@ -17,13 +17,11 @@ if(get_class($current_item) == 'Image') {
 }
 define("FACEBOX",'display');
 
-$collection_url = SEEKING_MICHIGAN_HOST.'/discover-collection?collection=';
-$collection_url = $collection_url.trim($current_item->alias,'/');
 $breadcrumbs = array(
   'Home' => SEEKING_MICHIGAN_HOST,
   'Discover' => SEEKING_MICHIGAN_HOST.'/discover',
   'Collections' => SEEKING_MICHIGAN_HOST.'/discover',
-  $collection_name => $collection_url, 
+  $collection->name => $collection->url(), 
   'Item Viewer' => '');
 
 app()->partial('header', 
@@ -31,7 +29,7 @@ app()->partial('header',
     'breadcrumbs' => $breadcrumbs, 
     'css_includes' => $css_includes,
     'js_includes' => $js_includes,
-    'title' => 'Viewer  &mdash; Seeking Michigan &mdash; '.$current_item->title(),
+    'title' => 'Viewer &mdash; Seeking Michigan &mdash; '.$current_item->title(),
     'current_item' => $current_item));
 ?>
 <div id="section-header">
@@ -43,8 +41,8 @@ app()->partial('header',
       <div class="wrapper">
         <h2>
           Collection: 
-          <a href="<?= $collection_url ?>" title="texthere">
-            <?= $collection_name; ?>
+          <a href="<?= $collection->url(); ?>" title="texthere">
+            <?= $collection->name; ?>
           </a>
         </h2>
         <h3>Item Viewer: <?= $current_item->title() ?></h3>

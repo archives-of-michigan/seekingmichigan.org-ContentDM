@@ -33,6 +33,7 @@ define("LANG", "en");
 require("../dmscripts/DMSystem.php");
 require("../dmscripts/DMImage.php");
 
+require_once 'lib/collection.php';
 require_once 'lib/item.php';
 require_once 'lib/image.php';
 require_once 'lib/compound_object.php';
