@@ -1,19 +1,19 @@
 <?
 class SearchStatus {
   function __construct($seek_search_params) {
+    $this->search_params = $seek_search_params;
+
     $search = Search::from_param_string($seek_search_params);
     $search->maxrecs = 3;
     $this->search_position = $search->start;
-    $search->start = max(0,$search->start - 1);
+    $search->start = max(1,$search->start - 1);
     
-    $this->search_params = $seek_search_params;
-
     $results = $search->results();
     
     if($this->search_position > 1) {
       $this->previous_item = $results[0];
     }
-
+ 
     if($this->search_position < $search->total) {
       $this->next_item = $results[2];
     }
