@@ -15,7 +15,7 @@ require 'webrat/core/matchers'
 Webrat.configure do |config|
   config.mode = :php
   config.open_error_files = false # Set to true if you want error pages to pop up in the browser
-  config.php_basedir = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'seeking_michigan'))
+  config.php_basedir = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'docs', 'seeking_michigan'))
 end
 
 include Webrat::Methods
