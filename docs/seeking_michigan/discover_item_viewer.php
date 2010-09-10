@@ -10,10 +10,12 @@ if(isset($_GET['search'])) {
   $search_status = new SearchStatus($_GET['search']);
 }
 
+$css_includes = array('screen/viewer');
 if(get_class($current_item) == 'Image') {
   $js_includes = array('jquery-ui-1.7.1.custom.min', 
-                       'jquery.event.drag-1.5.min', 'dmmonocle.min');
-  $css_includes = array('dmmonocle','smoothness/jquery-ui-1.7.custom');
+    'jquery.event.drag-1.5.min', 'dmmonocle.min',
+    'compound_object_browser');
+  $css_includes = array_merge($css_includes, array('dmmonocle','smoothness/jquery-ui-1.7.custom'));
 }
 define("FACEBOX",'display');
 
@@ -45,7 +47,7 @@ app()->partial('header',
             <?= $collection->name; ?>
           </a>
         </h2>
-        <h3>Item Viewer: <?= $current_item->title() ?></h3>
+        <h3><?= $current_item->title() ?></h3>
         <ul class="page-actions">
           <? if($search_status): ?>
             <li class="action-back">
@@ -74,17 +76,18 @@ app()->partial('header',
               View Collection
             </a>
           </li>
+          <? if($current_item->is_child()): ?>
+            <li class="browse-document">
+              <a id="compound_object_pages"
+                 href="<?= $current_item->parent_item()->browse_link($search_status); ?>">
+                Browse Document
+              </a>
+            </li>
+          <? endif; ?>
         </ul>
       </div>
     </div>
-    <? if($show_all) {
-      foreach($current_item->parent_item()->items() as $subitem) {
-        app()->partial('basic_view', 
-          array('current_item' => $subitem, 
-                'search_status' => $search_status,
-                'show_all' => $show_all));
-      }
-    } else if(get_class($current_item) == 'Image'){
+    <? if(get_class($current_item) == 'Image'){
       app()->partial('pan_view', array('current_item' => $current_item,
                                        'search_status' => $search_status));
     } else {
@@ -95,14 +98,10 @@ app()->partial('header',
     } ?>
     <div id="sidebar">
       <? if($current_item->is_child()): ?>
-        <a id="compound_object_pages"
-           href="/seeking_michigan/compound_object_pages.php">
-          Browse Document
-        </a>
-        <a href="<?= $current_item->parent_item()->
-                      view_link($seek_search_params); ?>">
-          Show All Items in Document
-        </a>
+        <ul class="sidenav">
+          <li>
+          </li>
+        </ul>
       <? endif; ?>
       <? 
          if($search_status) {
@@ -115,4 +114,10 @@ app()->partial('header',
 </div>
 <div id="main-whitebox-left"></div>
 <div id="main-whitebox-right"></div>
-<? app()->partial('footer'); ?>
+<? app()->partial('footer', 
+                  array(
+                    'hidden_partials' => array(
+                      'compound_object_list' => array(
+                        'parent_item' => $current_item->parent_item(),
+                        'search_status' => $search_status,
+                        'current_itnum' => $current_item->itnum)))); ?>

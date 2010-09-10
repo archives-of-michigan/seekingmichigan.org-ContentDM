@@ -27,5 +27,12 @@
       </div>
     </div>
   </div>
+  <? if($hidden_partials): ?>
+    <? foreach($hidden_partials as $partial => $locals): ?>
+      <div id="<?= $partial ?>" style="display:none">
+        <? app()->partial($partial, $locals); ?>
+      </div>
+    <? endforeach; ?>
+  <? endif; ?>
 </body>
 </html>

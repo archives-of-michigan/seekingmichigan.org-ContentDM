@@ -45,8 +45,9 @@ class CompoundObject extends Item {
     return $this->item_by_position($next_position);
   }
 
-  public function add_item($item) {
+  public function add_item($item, $num) {
     $item->set_parent_item($this);
+    $item->set_position($num);
     $this->items[] = $item;
   }
 
@@ -64,6 +65,12 @@ class CompoundObject extends Item {
     }
   }
 
+  public function browse_link($search_status) {
+    $search_url = $search_status ? $search_status->search_params : NULL;
+    $search_position = $search_status ? $search_status->search_position : NULL;
+    return "compound_object_pages.php".$this->query_params($search_url, $search_position);
+  }
+
   public static function from_xml($alias, $itnum, $xmlbuffer) {
     $xml = new SimpleXMLElement($xmlbuffer);
     $doc = ItemFactory::node($xml, '//xml');
@@ -75,11 +82,17 @@ class CompoundObject extends Item {
     dmGetCompoundObjectInfo($alias, $itnum, $compound_xml_buffer);
     $compound_xml = new SimpleXMLElement($compound_xml_buffer);
 
-    $pages = $compound_xml->xpath('//cpd/page');
+    $type = $compound_xml->xpath('//cpd/type');
+    if(((string) $type[0]) == 'Monograph') {
+      $pages = $compound_xml->xpath('//cpd/node/page');
+    } else {
+      $pages = $compound_xml->xpath('//cpd/page');
+    }
+    $num = 1;
     foreach($pages as $page) {
       $subitnum = (string) $page->pageptr;
       $item = ItemFactory::create($alias, $subitnum, NULL); 
-      $compound_object->add_item($item);
+      $compound_object->add_item($item, $num++);
     }
 
     return($compound_object);
