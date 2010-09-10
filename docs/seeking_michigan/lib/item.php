@@ -15,6 +15,7 @@ class Item {
   private $_parent = NULL;
   private $_collection_path = NULL;
   private $_xml = NULL;
+  private $_position;
  
 # public static
  
@@ -114,6 +115,13 @@ class Item {
     }
   }
 
+  public function position() {
+    $this->_position ? $this->_position : NULL;
+  }
+  public function set_position($num) {
+    $this->_position = $num;
+  }
+
   public function alt_title() {
     $text = $this->title;
     if(strlen($text) > 100){
@@ -187,14 +195,17 @@ class Item {
   }
 
   public function view_link($search_url, $search_position) {
-    $path = '';
+    return "discover_item_viewer.php".$this->query_params($search_url, $search_position);
+  }
+
+  protected function query_params($search_url, $search_position) {
+    $params = '';
     if($this->is_child()) {
       $parent_itnum = $this->parent_itnum();
-      $path = "discover_item_viewer.php?CISOROOT=$this->alias";
-      $path .= "&amp;CISOPTR=$parent_itnum&amp;CISOSHOW=$this->itnum";
+      $params = "?CISOROOT=$this->alias";
+      $params .= "&amp;CISOPTR=$parent_itnum&amp;CISOSHOW=$this->itnum";
     } else {
-      $path = "discover_item_viewer.php?CISOROOT=$this->alias";
-      $path .= "&amp;CISOPTR=$this->itnum";
+      $params = "?CISOROOT=$this->alias&amp;CISOPTR=$this->itnum";
     }
 
     if($search_url) {
@@ -213,7 +224,7 @@ class Item {
       return $this->view_link($search_status->search_params,
                               $search_status->search_position);
     } else {
-      return $this->view_link();
+      return $this->view_link(NULL, NULL);
     }
   }
 
