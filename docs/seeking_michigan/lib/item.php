@@ -166,7 +166,7 @@ class Item {
   public function is_printable() {
     if($this->is_child()) {
       return $this->parent_item()->is_printable();
-    } else if($this->file_type() == 'pdf') {
+    } else if($this->is_pdf()) {
       return TRUE;
     } else {
       return FALSE;
@@ -179,7 +179,11 @@ class Item {
 
   public function is_pdf() {
     $file = new SplFileInfo($this->pdf_path());
-    return ($file->isFile() || $this->file_type() == 'pdf');
+    return ($file->isFile() || $this->file_type() == 'pdf' || $this->is_pdf_page());
+  }
+
+  public function is_pdf_page() {
+    return ($this->file_type() == 'pdfpage');
   }
 
   public function pdf_path() {
@@ -213,10 +217,10 @@ class Item {
       $search_url .= "&CISOSTART=$search_position";
       $search_url = urlencode($search_url);
 
-      $path = "$path&amp;search=$search_url";
+      $params .= "&amp;search=$search_url";
     }
 
-    return $path;
+    return $params;
   }
 
   public function search_view_link($search_status = NULL) {

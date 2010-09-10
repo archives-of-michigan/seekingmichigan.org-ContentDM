@@ -119,6 +119,16 @@ class ItemTest extends PHPUnit_Framework_TestCase {
       $this->item->pdf_path());
   }
 
+  #is_pdf_page
+  public function testIsPdfPageShouldReturnTrueForPdfpageFiles() {
+    $this->item->file = '1234.pdfpage';
+    $this->assertTrue($this->item->is_pdf_page());
+  }
+  public function testIsPdfPageShouldReturnFalseForNonPdfpageFiles() {
+    $this->item->file = '1234.pdf';
+    $this->assertFalse($this->item->is_pdf_page());
+  }
+
   #from_xml
   public function testShouldLoadXml() {
     $item = Item::from_xml('p123456', '1608', $this->xmlbuffer);
