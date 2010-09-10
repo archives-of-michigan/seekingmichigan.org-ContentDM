@@ -1,9 +1,9 @@
 <?php
 require_once dirname(__FILE__).'/../test_helper.php';
-require_once dirname(__FILE__).'/../../seeking_michigan/lib/item.php';
-require_once dirname(__FILE__).'/../../seeking_michigan/lib/compound_object.php';
-require_once dirname(__FILE__).'/../../seeking_michigan/lib/image.php';
-require_once dirname(__FILE__).'/../../seeking_michigan/lib/item_factory.php';
+require_once dirname(__FILE__).'/../../docs/seeking_michigan/lib/item.php';
+require_once dirname(__FILE__).'/../../docs/seeking_michigan/lib/compound_object.php';
+require_once dirname(__FILE__).'/../../docs/seeking_michigan/lib/image.php';
+require_once dirname(__FILE__).'/../../docs/seeking_michigan/lib/item_factory.php';
 
 class CompoundObjectTest extends PHPUnit_Framework_TestCase {
   function setUp() {
@@ -76,5 +76,11 @@ XML;
     $this->assertEquals('aaa111',$co->alias);
     $this->assertEquals('9876',$co->itnum);
     $this->assertEquals(2,$co->num_items());
+  }
+
+  #browse_link
+  public function testBrowseLinkWithoutSearch() {
+    $this->assertEquals('compound_object_pages.php?CISOROOT=abc123&amp;CISOPTR=1607&amp;CISOSHOW=3333', 
+      $this->co->browse_link(NULL));
   }
 }

@@ -1,8 +1,8 @@
 <?php
 require_once dirname(__FILE__).'/../test_helper.php';
-require_once dirname(__FILE__).'/../../seeking_michigan/lib/item.php';
-require_once dirname(__FILE__).'/../../seeking_michigan/lib/compound_object.php';
-require_once dirname(__FILE__).'/../../seeking_michigan/lib/item_factory.php';
+require_once dirname(__FILE__).'/../../docs/seeking_michigan/lib/item.php';
+require_once dirname(__FILE__).'/../../docs/seeking_michigan/lib/compound_object.php';
+require_once dirname(__FILE__).'/../../docs/seeking_michigan/lib/item_factory.php';
 
 class ItemTest extends PHPUnit_Framework_TestCase {
   function setUp() {

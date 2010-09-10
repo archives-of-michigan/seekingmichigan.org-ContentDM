@@ -1,0 +1,7 @@
+>CATALOG
+
+#
+# 1. This is the catalog file for CONTENTdm
+#
+
+/uw		Sample Collection	/usr/local/Content5/uw
