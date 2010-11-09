@@ -18,8 +18,8 @@
     <? endif; ?>
     <div class="item-preview">
       <? if($current_item->is_pdf()): ?>
-        <a href="<?= $current_item->print_link(); ?>">Download PDF</a>
-        <iframe src="<?= $current_item->download_link(); ?>" 
+        <a href="<?= $current_item->download_link(); ?>">Download PDF</a>
+        <iframe src="<?= $current_item->print_link(); ?>" 
                 style="width: 100%; height: 6in"></iframe>
       <? elseif($current_item->is_audio()): ?>
         <audio src="<?= $current_item->download_link(); ?>" autoplay="true"
