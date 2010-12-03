@@ -192,7 +192,7 @@ class Item {
 
   public function print_link() {
     if ($this->is_pdf()) {
-      return "/cgi-bin/showpdf.exe?CISOROOT=$this->alias&CISOPTR=$this->itnum";
+      return "/cgi-bin/showfile.exe?CISOROOT=$this->alias&amp;CISOPTR=$this->itnum&amp;CISOMODE=print";
     } else {
       return "print.php?CISOROOT=$this->alias&amp;CISOPTR=$this->itnum";
     }
