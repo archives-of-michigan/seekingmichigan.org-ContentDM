@@ -36,7 +36,13 @@ $breadcrumbs = isset($breadcrumbs) ? $breadcrumbs : array('Home' => '');
   <? endforeach; ?>
   <script type="text/javascript" src="http://www.google-analytics.com/ga.js"></script>
   <script type="text/javascript">
-    try { _gat._getTracker("UA-7441223-3")._trackPageview(); } catch(err) {}
+    try { 
+	var pageTracker = _gat._getTracker("UA-7441223-1");
+	pageTracker._setDomainName("none");
+	pageTracker._setAllowLinker(true);
+	pageTracker._trackPageview(); 
+	} 
+    catch(err) {}
   </script>
   <? app()->partial('banner', 
                   array('scene' => app()->helper('header')->banner_scene())); ?>
@@ -56,12 +62,13 @@ $breadcrumbs = isset($breadcrumbs) ? $breadcrumbs : array('Home' => '');
   <div class="wrapper">
     <div id="header">
       <div class="wrapper">
-        <h1><a href="<?= SEEKING_MICHIGAN_HOST ?>"><img src="<?= SEEKING_MICHIGAN_HOST ?>/images/seeking-logo.gif" width="309" height="41" alt="Seeking Michigan Logo" /><span>Seeking Michigan</span></a></h1>
+        <h1><a href="<?= SEEKING_MICHIGAN_HOST ?>" onclick="pageTracker._link(this.href); return false;"><img src="<?= SEEKING_MICHIGAN_HOST ?>/images/seeking-logo.gif" width="309" height="41" alt="Seeking Michigan Logo" /><span>Seeking Michigan</span></a></h1>
         <ul id="nav">
           <li id="nav-seek"><a href="seek_advanced.php"> Seek</a></li>
-          <li id="nav-discover"><a href="<?= SEEKING_MICHIGAN_HOST ?>/discover"> Discover</a></li>
-          <li id="nav-look"><a href="<?= SEEKING_MICHIGAN_HOST ?>/look"> Look</a></li>
-          <li id="nav-teach"><a href="<?= SEEKING_MICHIGAN_HOST ?>/teach"> Teach</a></li>
+          <li id="nav-discover"><a href="<?= SEEKING_MICHIGAN_HOST ?>/discover" onclick="pageTracker._link(this.href); return false;"> Discover</a></li>
+          <li id="nav-look"><a href="<?= SEEKING_MICHIGAN_HOST ?>/look" onclick="pageTracker._link(this.href); return false;"> Look</a></li>
+          <li id="nav-teach"><a href="<?= SEEKING_MICHIGAN_HOST ?>/teach" onclick="pageTracker._link(this.href); return false;"> Teach</a></li>
+          <li id="nav-buy"><a href="http://store.seekingmichigan.org" onclick="pageTracker._link(this.href); return false;"> Buy</a></li>
         </ul>
       </div>
     </div>
