@@ -12,7 +12,7 @@
           <?= $collection['name']; ?></option>
       <? endforeach; ?>
     </select>
-    <input type="image" src="<?= SEEKING_MICHIGAN_HOST ?>/images/search-button.gif" value=" " />  
+    <input type="image" src="<?= SEEKING_MICHIGAN_HOST ?>/wp-content/themes/airbag/images/search-button.gif" value=" " />  
     Or use <a href="seek_advanced.php">Advanced Search &raquo; </a>
   </p>
 </form>

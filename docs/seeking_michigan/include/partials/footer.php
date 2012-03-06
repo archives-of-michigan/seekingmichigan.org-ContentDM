@@ -4,7 +4,7 @@
       <div id="main-whitebox-bottom"></div>
       <div class="michigan-circle">
         <a href="http://mi.gov">
-          <img src="<?= SEEKING_MICHIGAN_HOST ?>/images/michigan-state-circle.png" alt="michigan seal" />
+          <img src="<?= SEEKING_MICHIGAN_HOST ?>/wp-content/themes/airbag/images/michigan-state-circle.png" alt="michigan seal" />
         </a>
       </div>
       <div class="wrapper">

@@ -62,7 +62,7 @@ $breadcrumbs = isset($breadcrumbs) ? $breadcrumbs : array('Home' => '');
   <div class="wrapper">
     <div id="header">
       <div class="wrapper">
-        <h1><a href="<?= SEEKING_MICHIGAN_HOST ?>" onclick="pageTracker._link(this.href); return false;"><img src="<?= SEEKING_MICHIGAN_HOST ?>/images/seeking-logo.gif" width="309" height="41" alt="Seeking Michigan Logo" /><span>Seeking Michigan</span></a></h1>
+        <h1><a href="<?= SEEKING_MICHIGAN_HOST ?>" onclick="pageTracker._link(this.href); return false;"><img src="<?= SEEKING_MICHIGAN_HOST ?>/wp-content/themes/airbag/images/seeking-logo.gif" width="309" height="41" alt="Seeking Michigan Logo" /><span>Seeking Michigan</span></a></h1>
         <ul id="nav">
           <li id="nav-seek"><a href="seek_advanced.php"> Seek</a></li>
           <li id="nav-discover"><a href="<?= SEEKING_MICHIGAN_HOST ?>/discover" onclick="pageTracker._link(this.href); return false;"> Discover</a></li>

@@ -6,12 +6,12 @@
           Full/Pop:
           <a href="<?= $current_item->print_link(); ?>" class="pop-full" 
              title="Fullscreen">
-            <img src="<?= SEEKING_MICHIGAN_HOST ?>/images/icon-zoom-full.gif" 
+            <img src="<?= SEEKING_MICHIGAN_HOST ?>/wp-content/themes/airbag/images/icon-zoom-full.gif" 
                  alt="rotate left" />
           </a> 
           <a href="<?= $current_item->print_link(); ?>" class="pop-new"
              title="New Window" target="_new">
-            <img src="<?= SEEKING_MICHIGAN_HOST ?>/images/icon-zoom-new.gif" 
+            <img src="<?= SEEKING_MICHIGAN_HOST ?>/wp-content/themes/airbag/images/icon-zoom-new.gif" 
                  alt="rotate left" /></a>
         </li>
       </ul>

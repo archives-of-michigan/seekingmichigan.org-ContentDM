@@ -12,7 +12,7 @@
         </a>
       <? else: ?>
         <span class="nav-boundary">
-          <img src="<?= SEEKING_MICHIGAN_HOST ?>/images/first_item.png"
+          <img src="<?= SEEKING_MICHIGAN_HOST ?>/wp-content/themes/airbag/images/first_item.png"
                alt="first item" />
         </span>
       <? endif; ?>
@@ -28,7 +28,7 @@
         </a>
       <? else: ?>
         <span class="nav-boundary">
-          <img src="<?= SEEKING_MICHIGAN_HOST ?>/images/last_item.png"
+          <img src="<?= SEEKING_MICHIGAN_HOST ?>/wp-content/themes/airbag/images/last_item.png"
                alt="last item" />
         </span>
       <? endif; ?>

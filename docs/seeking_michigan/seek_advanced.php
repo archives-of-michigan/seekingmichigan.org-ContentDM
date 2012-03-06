@@ -53,7 +53,7 @@ $collections = dmGetCollectionList();
               </select>
               <input type="button" id="clear-all" value="Clear All" />
             </div>
-            <input type="image" id="advanced-search-button" src="<?= SEEKING_MICHIGAN_HOST ?>/images/search-button.png" value="" />
+            <input type="image" id="advanced-search-button" src="<?= SEEKING_MICHIGAN_HOST ?>/wp-content/themes/airbag/images/search-button.png" value="" />
           </fieldset>
         </form>
       </div>
