@@ -7,22 +7,22 @@ $breadcrumbs = isset($breadcrumbs) ? $breadcrumbs : array('Home' => '');
 <head>
   <title><?= $title ?></title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <link rel="stylesheet" href="<?= SEEKING_MICHIGAN_HOST ?>/css/screen/main.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="<?= SEEKING_MICHIGAN_HOST ?>/wp-content/themes/airbag/stylesheets/screen/main.css" type="text/css" media="screen, projection" />
   <!--[if IE]>
-  <link rel="stylesheet" href="<?= SEEKING_MICHIGAN_HOST ?>/css/screen/patches/win-ie-all.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="<?= SEEKING_MICHIGAN_HOST ?>/wp-content/themes/airbag/stylesheets/screen/patches/win-ie-all.css" type="text/css" media="screen, projection" />
   <![endif]-->
   <!--[if IE 7]>
-  <link rel="stylesheet" href="<?= SEEKING_MICHIGAN_HOST ?>/css/screen/patches/win-ie7.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="<?= SEEKING_MICHIGAN_HOST ?>/wp-content/themes/airbag/stylesheets/screen/patches/win-ie7.css" type="text/css" media="screen, projection" />
   <![endif]-->
   <!--[if lt IE 7]>
-  <link rel="stylesheet" href="<?= SEEKING_MICHIGAN_HOST ?>/css/screen/patches/win-ie-old.css" type="text/css" media="screen, projection" />
+  <link rel="stylesheet" href="<?= SEEKING_MICHIGAN_HOST ?>/wp-content/themes/airbag/stylesheets/screen/patches/win-ie-old.css" type="text/css" media="screen, projection" />
   <script type="text/javascript" src="<?= SEEKING_MICHIGAN_HOST ?>/js/lib/dd-png.js"></script>
   <![endif]-->
   <? foreach($css_includes as $css): ?>
     <? if(preg_match('/^http:\/\//',$css) > 0): ?>
       <link rel="stylesheet" href="<?= $css ?>" type="text/css" media="screen, projection" />
     <? else: ?>
-      <link rel="stylesheet" href="<?= SEEKING_MICHIGAN_HOST ?>/css/<?= $css ?>.css" type="text/css" media="screen, projection" />
+      <link rel="stylesheet" href="<?= SEEKING_MICHIGAN_HOST ?>/wp-content/themes/airbag/stylesheets/<?= $css ?>.css" type="text/css" media="screen, projection" />
     <? endif; ?>
   <? endforeach; ?>
   <script type="text/javascript" src="<?= SEEKING_MICHIGAN_HOST ?>/js/core.js"></script>
